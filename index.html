@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <title>Document</title>
+</head>
+
+<body class="body">
+    <header class="header">
+        <img src="./images/logo.svg" alt="" class="header__logo">
+    </header>
+    <!-- /.header -->
+    <main class="content">
+        <section class="profile">
+            <div class="profile__person">
+                <img src="./images/Avatar.jpg" alt="Жак-Ив Кусто -Исследователь океана" class="profile__avatar">
+                <div class="profile__info">
+                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <button class="profile__edit"></button>
+                    <p class="profile__job">Исследователь океана</p>
+                </div>
+            </div>
+            <button class="profile__add-item"></button>
+        </section>
+        <!-- profile -->
+
+        <section class="elements">
+            <ul class="elements-list">
+                <li class="element">
+                    <img src="./images/elem-1.jpg" alt="Большая голубая дыра" class="element__img">
+                    <div class="element__title-group">
+                        <h2 class="element__title">Большая голубая дыра </h2>
+                        <button class="element__like"></button>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./images/elem-2.jpg" alt="Амазонка" class="element__img">
+                    <div class="element__title-group">
+                        <h2 class="element__title">Амазонка</h2>
+                        <button class="element__like"></button>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./images/elem-3.jpg" alt="Большой Барьерный риф" class="element__img">
+                    <div class="element__title-group">
+                        <h2 class="element__title">Большой Барьерный риф</h2>
+                        <button class="element__like"></button>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./images/elem-4.jpg" alt="Антарктида" class="element__img">
+                    <div class="element__title-group">
+                        <h2 class="element__title">Антарктида </h2>
+                        <button class="element__like"></button>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./images/elem-5.jpg" alt="Мадагаскар" class="element__img">
+                    <div class="element__title-group">
+                        <h2 class="element__title">Мадагаскар</h2>
+                        <button class="element__like"></button>
+                    </div>
+                </li>
+
+                <li class="element">
+                    <img src="./images/elem-6.jpg" alt="Байкал" class="element__img">
+                    <div class="element__title-group">
+                        <h2 class="element__title">Байкал</h2>
+                        <button class="element__like"></button>
+                    </div>
+                </li>
+            </ul>
+
+        </section>
+        <!-- /.elements -->
+    </main>
+    <!-- /.content -->
+    <footer class="footer">
+        <p class="footer__text">© 2022 Mesto Russia</p>
+    </footer>
+    <!-- /.footer -->
+
+    <div class="popup">
+        <div class="popup__container">
+            <h3 class="popup__title">Редактировать профиль</h3>
+            <button class="popup__close"></button>
+            <div class="form-conteiner">
+                <form action="" class="popup__form">
+                    <fieldset class="popup__input-container">
+                        <input type="text" name="name" class="popup__name-field popup__field">
+                        <input type="text" name="name" class="popup__job-field popup__field">
+                    </fieldset>
+                    <button type="submit" class="popup__btn-save">Сохранить</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- popup -->
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
