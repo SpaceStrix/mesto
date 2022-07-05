@@ -38,7 +38,7 @@ function closePopupHandler() {
 	popup.classList.remove('popup_opened');
 }
 function putLikeHandler(e) {
-	if (e.target.tagName === 'BUTTON') {
+	if (e.target.matches('.element__like')) {
 		e.target.classList.toggle('element__like_active');
 	}
 }
