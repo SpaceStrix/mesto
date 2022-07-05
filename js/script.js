@@ -11,9 +11,11 @@ let popupClose = document.querySelector('.popup__close');
 // открытие popUp'a
 let editProfile = document.querySelector('.profile__edit');
 let popup = document.querySelector('.popup');
+// Сохранение
+let saveData = document.querySelector('.popup__btn-save');
 
 // Лайк Active
-// let parentsElements = document.querySelector('.elements');
+let parentsElements = document.querySelector('.elements');
 
 // события
 function formSubmitHandler(e) {
@@ -23,21 +25,25 @@ function formSubmitHandler(e) {
 	profileProfession.textContent = jobInput.value;
 }
 function openPopUpHandler() {
-	popup.classList.add('popup-visible');
+	popup.classList.add('popup_opened');
 
 	nameInput.value = profileName.textContent;
 	jobInput.value = profileProfession.textContent;
 }
 function closePopupHandler() {
-	popup.classList.remove('popup-visible');
+	popup.classList.remove('popup_opened');
 }
-// function putLikeHandler(e) {
-// 	if (e.target.tagName === 'BUTTON') {
-// 		e.target.classList.toggle('element__like_active');
-// 	}
-// }
+function putLikeHandler(e) {
+	if (e.target.tagName === 'BUTTON') {
+		e.target.classList.toggle('element__like_active');
+	}
+}
+function safeDataHendler() {
+	popup.classList.remove('popup_opened');
+}
 
 editProfile.addEventListener('click', openPopUpHandler);
 popupClose.addEventListener('click', closePopupHandler);
 formElement.addEventListener('submit', formSubmitHandler);
-// parentsElements.addEventListener('click', putLikeHandler);
+parentsElements.addEventListener('click', putLikeHandler);
+saveData.addEventListener('click', safeDataHendler);
