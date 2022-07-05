@@ -12,7 +12,7 @@ let popupClose = document.querySelector('.popup__close');
 let editProfile = document.querySelector('.profile__edit');
 let popup = document.querySelector('.popup');
 // Сохранение
-let saveData = document.querySelector('.popup__btn-save');
+let safeData = document.querySelector('.popup__btn-safe');
 
 // Лайк Active
 let parentsElements = document.querySelector('.elements');
@@ -23,6 +23,10 @@ function formSubmitHandler(e) {
 
 	profileName.textContent = nameInput.value;
 	profileProfession.textContent = jobInput.value;
+
+	if (e.keyCode === 13) {
+		popup.classList.remove('popup_opened');
+	}
 }
 function openPopUpHandler() {
 	popup.classList.add('popup_opened');
@@ -46,4 +50,4 @@ editProfile.addEventListener('click', openPopUpHandler);
 popupClose.addEventListener('click', closePopupHandler);
 formElement.addEventListener('submit', formSubmitHandler);
 parentsElements.addEventListener('click', putLikeHandler);
-saveData.addEventListener('click', safeDataHendler);
+safeData.addEventListener('click', safeDataHendler);
