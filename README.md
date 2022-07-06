@@ -1,9 +1,12 @@
 # [![Typing SVG](https://readme-typing-svg.herokuapp.com?font=Inter&size=32&color=010808&vCenter=true&width=500&lines=%D0%9F%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BD%D0%B0%D1%8F+%D1%80%D0%B0%D0%B1%D0%BE%D1%82%D0%B0+'%D0%9C%D0%B5%D1%81%D1%82%D0%BE')](https://git.io/typing-svg)
 
 ## Описание проектной работы
-В ходе выполнения проектной работы #4 был реализован Popup с возможностью редактирования и сохранения информации. 
+В ходе выполнения проектной работы #4 был реализован Popup с возможностью редактирования и сохранения информации.
 
-[Ссылка на макет в Figma](https://www.figma.com/file/2cn9N9jSkmxD84oJik7xL7/JavaScript.-Sprint-4?node-id=0%3A1)
+
+## Посмотреть работу
+[Клац](https://spacestrix.github.io/mesto/)
+
 
 ## Используемые языки и технологии
 <div>
@@ -16,8 +19,4 @@
 
 ## Screenshots
 ![App Screenshot](./images/screenshots/Screenshots.png)
-
-
-## :heavy_check_mark: Чеклист к проектной работе
-1. [Чеклист #_1](https://code.s3.yandex.net/web-developer/checklists-pdf/new-program/checklist-4.pdf)
 
