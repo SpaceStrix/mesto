@@ -68,6 +68,7 @@
 	grid-template-columns: 1fr 24px;
 	column-gap: 18px;
 	align-items: baseline;
+	justify-items: flex-start;
 }
 .profile__name {
 	margin: 0;
@@ -126,27 +127,29 @@
 .elements {
 	display: grid;
 	justify-items: center;
-	grid-template-columns: repeat(auto-fill, minmax(284px, 1fr));
-	column-gap: 14px;
+	grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+	column-gap: 17px;
 	row-gap: 20px;
 }
 
-.elements__post {
-	max-width: 282px;
-	height: 100%;
+.element {
+	width: 100%;
+	height: auto;
 }
 .element__img {
-	width: 282px;
+	width: 100%;
 	height: 282px;
 	border-radius: 10px 10px 0 0;
 	display: block;
+	object-fit: cover;
 }
 
 .element__title-group {
-	padding: 25px 20px 26px 21px;
+	padding: 24px 20px 26px 21px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	column-gap: 10px;
 
 	background-color: #fff;
 	border-radius: 0 0 10px 10px;
@@ -154,7 +157,7 @@
 .element__title {
 	margin: 0;
 
-	max-width: 200px;
+	/* max-width: 200px; */
 
 	color: #000;
 	text-overflow: ellipsis;
@@ -168,7 +171,7 @@
 .element__like {
 	padding: 0;
 
-	width: 22px;
+	min-width: 22px;
 	height: 19px;
 
 	border: none;
@@ -218,7 +221,7 @@
 }
 
 .popup__container {
-	width: 430px;
+	max-width: 430px;
 	max-height: 330px;
 	background: #ffffff;
 	box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
@@ -230,6 +233,7 @@
 .popup__close {
 	border: none;
 	background: url(./images/close.svg);
+	background-size: cover;
 	width: 32px;
 	height: 32px;
 	position: absolute;
@@ -266,7 +270,7 @@
 .popup__job-field {
 	padding: 0;
 	padding-bottom: 6px;
-	width: 358px;
+	width: 100%;
 	border: none;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 	font-size: 14px;
@@ -284,7 +288,8 @@
 .popup__btn-safe {
 	margin-top: 48px;
 	padding: 16px 0;
-	width: 358px;
+	max-width: 358px;
+	min-width: 238px;
 	background-color: #000;
 	color: #fff;
 	border: none;
@@ -297,7 +302,7 @@
 	opacity: 0.8;
 }
 
-@media screen and (min-width: 320px) and (max-width: 480px) {
+@media screen and (min-width: 320px) and (max-width: 768px) {
 	.content {
 		width: calc(100% - 19px*2);
 		margin: 0 auto;
@@ -307,10 +312,10 @@
 	.header {
 		padding-top: 28px;
 		padding-bottom: 31.6px;
+		padding-left: 27px;
 	}
 
 	.header__logo {
-		padding-left: 27px;
 		max-width: 104px;
 	}
 	.profile {
@@ -357,5 +362,34 @@
 	.footer__text {
 		font-size: 14px;
 		line-height: 17px;
+	}
+
+	/* popup */
+	.popup__container {
+		padding: 25px 22px;
+		width: calc(100% - 19px*2);
+	}
+
+	.popup__title {
+		line-height: 22px;
+		font-size: 18px;
+	}
+	.popup__close {
+		width: 20px;
+		height: 20px;
+		right: 0;
+	}
+}
+
+@media screen and (min-width: 769px) {
+	.content {
+		width: calc(100% - 19px*2);
+		margin: 0 auto;
+		text-align: center;
+	}
+
+	.header,
+	.footer {
+		width: calc(100% - 19px*2);
 	}
 }
