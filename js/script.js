@@ -1,5 +1,5 @@
 // форма
-let formElement = document.querySelector('.popup__form');
+let formElement = document.forms['popup__form'];
 // поля формы
 let nameInput = formElement.elements['name'];
 let jobInput = formElement.elements['about-me'];

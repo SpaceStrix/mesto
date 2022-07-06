@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto Russia - учебный проект</title>
 </head>
 
@@ -15,7 +15,6 @@
     <header class="header">
         <img src="./images/logo.svg" alt="" class="header__logo">
     </header>
-    <!-- /.header -->
     <main class="content">
         <section class="profile">
             <div class="profile__person">
@@ -82,18 +81,16 @@
         </section>
         <!-- /.elements -->
     </main>
-    <!-- /.content -->
     <footer class="footer">
         <p class="footer__text">© 2022 Mesto Russia</p>
     </footer>
-    <!-- /.footer -->
 
     <div class="popup">
         <div class="popup__container">
             <h3 class="popup__title">Редактировать профиль</h3>
             <button class="popup__close"></button>
             <div class="form-conteiner">
-                <form action="" class="popup__form">
+                <form class="popup__form" name="popup__form">
                     <fieldset class="popup__input-container">
                         <input type="text" name="name" class="popup__name-field popup__field" placeholder="Имя">
                         <input type="text" name="about-me" class="popup__job-field popup__field" placeholder="О себе">
@@ -103,7 +100,6 @@
             </div>
         </div>
     </div>
-    <!-- popup -->
     <script src="./js/script.js"></script>
 </body>
 
