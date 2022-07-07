@@ -13,7 +13,7 @@
 <body class="body">
 
     <header class="header">
-        <img src="./images/logo.svg" alt="" class="header__logo">
+        <a href="#" class="header__logo" target="_blank"></a>
     </header>
     <main class="content">
         <section class="profile">
@@ -21,11 +21,11 @@
                 <img src="./images/Avatar.jpg" alt="Жак-Ив Кусто -Исследователь океана" class="profile__avatar">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
-                    <button class="profile__edit"></button>
+                    <button class="profile__edit" type="button"></button>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
             </div>
-            <button class="profile__add-item"></button>
+            <button class="profile__add-item" type="button"></button>
         </section>
         <!-- profile -->
 
@@ -34,7 +34,7 @@
                 <img src="./images/elem-1.jpg" alt="Большая голубая дыра" class="element__img">
                 <div class="element__title-group">
                     <h2 class="element__title">Большая голубая дыра </h2>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
 
@@ -42,7 +42,7 @@
                 <img src="./images/elem-2.jpg" alt="Амазонка" class="element__img">
                 <div class="element__title-group">
                     <h2 class="element__title">Амазонка</h2>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
 
@@ -50,7 +50,7 @@
                 <img src="./images/elem-3.jpg" alt="Большой Барьерный риф" class="element__img">
                 <div class="element__title-group">
                     <h2 class="element__title">Большой Барьерный риф</h2>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
 
@@ -58,7 +58,7 @@
                 <img src="./images/elem-4.jpg" alt="Антарктида" class="element__img">
                 <div class="element__title-group">
                     <h2 class="element__title">Антарктида </h2>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
 
@@ -66,7 +66,7 @@
                 <img src="./images/elem-5.jpg" alt="Мадагаскар" class="element__img">
                 <div class="element__title-group">
                     <h2 class="element__title">Мадагаскар</h2>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
 
@@ -74,7 +74,7 @@
                 <img src="./images/elem-6.jpg" alt="Байкал" class="element__img">
                 <div class="element__title-group">
                     <h2 class="element__title">Байкал</h2>
-                    <button class="element__like"></button>
+                    <button class="element__like" type="button"></button>
                 </div>
             </article>
 
@@ -87,17 +87,15 @@
 
     <div class="popup">
         <div class="popup__container">
-            <h3 class="popup__title">Редактировать профиль</h3>
-            <button class="popup__close"></button>
-            <div class="form-conteiner">
-                <form class="popup__form" name="popup__form">
-                    <fieldset class="popup__input-container">
-                        <input type="text" name="name" class="popup__name-field popup__field" placeholder="Имя">
-                        <input type="text" name="about-me" class="popup__job-field popup__field" placeholder="О себе">
-                    </fieldset>
-                    <button type="submit" class="popup__btn-safe">Сохранить</button>
-                </form>
-            </div>
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <button class="popup__close" type="button"></button>
+            <form class="popup__form" name="popup__form">
+                <fieldset class="popup__input-container">
+                    <input type="text" name="name" class="popup__field" placeholder="Имя">
+                    <input type="text" name="about-me" class="popup__field" placeholder="О себе">
+                </fieldset>
+                <button type="submit" class="popup__btn-safe">Сохранить</button>
+            </form>
         </div>
     </div>
     <script src="./js/index.js"></script>
