@@ -1,27 +1,70 @@
-let body = document.querySelector('.body');
+const initialCards = [
+	{
+		name: 'Большая голубая дыра',
+		link: './images/elem-1.jpg'
+	},
+	{
+		name: 'Амазонка',
+		link: './images/elem-2.jpg'
+	},
+	{
+		name: 'Большой Барьерный риф',
+		link: './images/elem-3.jpg'
+	},
+	{
+		name: 'Антарктида ',
+		link: './images/elem-4.jpg'
+	},
+	{
+		name: 'Мадагаскар',
+		link: './images/elem-5.jpg'
+	},
+	{
+		name: 'Байкал',
+		link: './images/elem-6.jpg'
+	}
+];
 
-// форма
-let formElement = document.forms['popup__form'];
-let nameInput = formElement.elements['name'];
-let jobInput = formElement.elements['about-me'];
+const body = document.querySelector('.body');
+const template = document.querySelector('.element').content;
+const containerElements = document.querySelector('.elements');
 
-// поля профиля
-let profileName = document.querySelector('.profile__name');
-let profileProfession = document.querySelector('.profile__job');
+const formElement = document.forms['popup__form'];
+const nameInput = formElement.elements['name'];
+const jobInput = formElement.elements['about-me'];
 
-let popup = document.querySelector('.popup');
-let editProfile = document.querySelector('.profile__edit');
+const formCreateElement = document.forms['popup__form_create-element'];
+const elementTitle = formCreateElement.elements['element-title'];
+const elementImg = formCreateElement.elements['element-img'];
 
+const profileName = document.querySelector('.profile__name');
+const profileProfession = document.querySelector('.profile__job');
+const editProfile = document.querySelector('.profile__edit');
+const popup = document.querySelector('.popup');
+
+const popupAddElement = document.querySelector('.popup_type_new-card');
+const addElementBtn = document.querySelector('.profile__add-item');
+const popupOpenImg = document.querySelector('.popup_type_image');
+
+// event
+addElementBtn.addEventListener('click', (e) => {
+	openPopup(popupAddElement);
+});
 body.addEventListener('click', closePopupHandler);
+editProfile.addEventListener('click', function() {
+	openPopup(popup);
+	setPopupFieldValue();
+});
+formElement.addEventListener('submit', formSubmitHandler);
+formCreateElement.addEventListener('submit', createElementHandler);
 
-// события
+// popup
 function formSubmitHandler(e) {
 	e.preventDefault();
 
 	setTextContentValue();
 	closePopup(popup);
 }
-
 function closePopupHandler(e) {
 	const target = e.target;
 	const currentPopup = target.closest('.popup');
@@ -29,17 +72,14 @@ function closePopupHandler(e) {
 		closePopup(currentPopup);
 	}
 }
-
 function setTextContentValue() {
 	profileName.textContent = nameInput.value;
 	profileProfession.textContent = jobInput.value;
 }
-
 function setPopupFieldValue() {
 	nameInput.value = profileName.textContent;
 	jobInput.value = profileProfession.textContent;
 }
-
 function openPopup(popup) {
 	popup.classList.add('popup_opened');
 }
@@ -47,9 +87,46 @@ function closePopup(popup) {
 	popup.classList.remove('popup_opened');
 }
 
-editProfile.addEventListener('click', function() {
-	openPopup(popup);
-	setPopupFieldValue();
-});
+//card
+function deleteHandler(e) {
+	const target = e.target;
+	deleteElement(target.closest('.element'));
+}
+function likeElementHandler(e) {
+	const target = e.target;
+	target.classList.toggle('element__like_active');
+}
+function deleteElement(elem) {
+	elem.remove();
+}
+function addElementInHtml(initialCards) {
+	initialCards.forEach((item) => {
+		renderElementHandler(item.link, item.name);
+	});
+}
 
-formElement.addEventListener('submit', formSubmitHandler);
+function renderElementHandler(src, name) {
+	const cloneElement = template.querySelector('.element').cloneNode(true);
+	cloneElement.querySelector('.element__img').src = src;
+	cloneElement.querySelector('.element__img').setAttribute('alt', `Изображение ${name}`);
+	cloneElement.querySelector('.element__title').textContent = name;
+
+	cloneElement.querySelector('.element__img').addEventListener('click', openImg(src, name))
+
+	cloneElement.querySelector('.element__delete').addEventListener('click', deleteHandler);
+	cloneElement.querySelector('.element__like').addEventListener('click', likeElementHandler);
+	containerElements.prepend(cloneElement);
+}
+function createElementHandler(e) {
+	e.preventDefault();
+	renderElementHandler(elementImg.value, elementTitle.value);
+	closePopup(popupAddElement);
+	formCreateElement.reset();
+}
+
+addElementInHtml(initialCards);
+
+
+function openImg(src, name) {
+console.log(src,name)
+}

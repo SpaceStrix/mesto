@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +10,6 @@
 </head>
 
 <body class="body">
-
     <header class="header">
         <a href="#" class="header__logo" target="_blank"></a>
     </header>
@@ -30,65 +28,6 @@
         <!-- profile -->
 
         <section class="elements">
-            <article class="element">
-                <button class="element__delete" type="button"></button>
-                <img src="./images/elem-1.jpg" alt="Большая голубая дыра" class="element__img">
-                <div class="element__title-group">
-                    <h2 class="element__title">Большая голубая дыра </h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </article>
-
-            <article class="element">
-                <button class="element__delete" type="button"></button>
-
-                <img src="./images/elem-2.jpg" alt="Амазонка" class="element__img">
-                <div class="element__title-group">
-                    <h2 class="element__title">Амазонка</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </article>
-
-            <article class="element">
-                <button class="element__delete" type="button"></button>
-
-                <img src="./images/elem-3.jpg" alt="Большой Барьерный риф" class="element__img">
-                <div class="element__title-group">
-                    <h2 class="element__title">Большой Барьерный риф</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </article>
-
-            <article class="element">
-                <button class="element__delete" type="button"></button>
-
-                <img src="./images/elem-4.jpg" alt="Антарктида" class="element__img">
-                <div class="element__title-group">
-                    <h2 class="element__title">Антарктида </h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </article>
-
-            <article class="element">
-                <button class="element__delete" type="button"></button>
-
-                <img src="./images/elem-5.jpg" alt="Мадагаскар" class="element__img">
-                <div class="element__title-group">
-                    <h2 class="element__title">Мадагаскар</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </article>
-
-            <article class="element">
-                <button class="element__delete" type="button"></button>
-
-                <img src="./images/elem-6.jpg" alt="Байкал" class="element__img">
-                <div class="element__title-group">
-                    <h2 class="element__title">Байкал</h2>
-                    <button class="element__like" type="button"></button>
-                </div>
-            </article>
-
         </section>
         <!-- /.elements -->
     </main>
@@ -96,7 +35,7 @@
         <p class="footer__text">© 2022 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_type_edit">
         <div class="popup__container">
             <h2 class="popup__title">Редактировать профиль</h2>
             <button class="popup__close" type="button"></button>
@@ -109,7 +48,41 @@
             </form>
         </div>
     </div>
+    <div class="popup popup_type_new-card">
+        <div class="popup__container">
+            <h2 class="popup__title">Новое место</h2>
+            <button class="popup__close" type="button"></button>
+            <form class="popup__form" name="popup__form_create-element">
+                <fieldset class="popup__input-container">
+                    <input type="text" name="element-title" class="popup__field" placeholder="Название">
+                    <input type="text" name="element-img" class="popup__field" placeholder="Ссылка на картинку">
+                </fieldset>
+                <button type="submit" class="popup__btn-safe btn_create">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_image">
+        <div class="previe-container">
+            <figure class="previe-container__img">
+                <img src="./" alt="" class="popup__img">
+                <figcaption class="previe-container__title">Новое место</figcaption>
+            </figure>
+            <button class="popup__close" type="button"></button>
+        </div>
+    </div>
+
+    <template class="element">
+        <article class="element">
+            <button class="element__delete" type="button"></button>
+            <img src="./images/elem-1.jpg" alt="Большая голубая дыра" class="element__img">
+            <div class="element__title-group">
+                <h2 class="element__title">Большая голубая дыра </h2>
+                <button class="element__like" type="button"></button>
+            </div>
+        </article>
+
+    </template>
     <script src="./js/index.js"></script>
 </body>
-
 </html>
