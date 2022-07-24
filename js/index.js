@@ -44,13 +44,13 @@ const popup = document.querySelector('.popup');
 
 const popupAddElement = document.querySelector('.popup_type_new-card');
 const addElementBtn = document.querySelector('.profile__add-item');
-const popupOpenImg = document.querySelector('.popup_type_image');
+const popupImg = document.querySelector('.popup_type_image');
 
 // event
-addElementBtn.addEventListener('click', (e) => {
+body.addEventListener('click', closePopupHandler);
+addElementBtn.addEventListener('click', () => {
 	openPopup(popupAddElement);
 });
-body.addEventListener('click', closePopupHandler);
 editProfile.addEventListener('click', function() {
 	openPopup(popup);
 	setPopupFieldValue();
@@ -88,6 +88,21 @@ function closePopup(popup) {
 }
 
 //card
+function popupOpenImg(e) {
+	const target = e.target;
+	const img = target.src;
+	const title = target.alt;
+
+	setValuePopupImg(img, title);
+	openPopup(popupImg);
+}
+function setValuePopupImg(img, title) {
+	let getSrcPopupImg = popupImg.querySelector('.img-container__img_size');
+	let getTitlePopupImg = popupImg.querySelector('.img-container__title');
+
+	getSrcPopupImg.setAttribute('src', img);
+	getTitlePopupImg.textContent = title;
+}
 function deleteHandler(e) {
 	const target = e.target;
 	deleteElement(target.closest('.element'));
@@ -101,32 +116,26 @@ function deleteElement(elem) {
 }
 function addElementInHtml(initialCards) {
 	initialCards.forEach((item) => {
-		renderElementHandler(item.link, item.name);
+		renderElement(item.link, item.name);
 	});
 }
-
-function renderElementHandler(src, name) {
+function renderElement(src, name) {
 	const cloneElement = template.querySelector('.element').cloneNode(true);
 	cloneElement.querySelector('.element__img').src = src;
-	cloneElement.querySelector('.element__img').setAttribute('alt', `Изображение ${name}`);
+	cloneElement.querySelector('.element__img').setAttribute('alt', `${name}`);
 	cloneElement.querySelector('.element__title').textContent = name;
-
-	cloneElement.querySelector('.element__img').addEventListener('click', openImg(src, name))
 
 	cloneElement.querySelector('.element__delete').addEventListener('click', deleteHandler);
 	cloneElement.querySelector('.element__like').addEventListener('click', likeElementHandler);
-	containerElements.prepend(cloneElement);
+	cloneElement.querySelector('.element__img').addEventListener('click', popupOpenImg);
+
+	return containerElements.prepend(cloneElement);
 }
 function createElementHandler(e) {
 	e.preventDefault();
-	renderElementHandler(elementImg.value, elementTitle.value);
+	renderElement(elementImg.value, elementTitle.value);
 	closePopup(popupAddElement);
 	formCreateElement.reset();
 }
 
 addElementInHtml(initialCards);
-
-
-function openImg(src, name) {
-console.log(src,name)
-}
