@@ -97,7 +97,7 @@ function popupOpenImg(e) {
 	openPopup(popupImg);
 }
 function setValuePopupImg(img, title) {
-	let getSrcPopupImg = popupImg.querySelector('.img-container__img_size');
+	let getSrcPopupImg = popupImg.querySelector('.img-container__img');
 	let getTitlePopupImg = popupImg.querySelector('.img-container__title');
 
 	getSrcPopupImg.setAttribute('src', img);

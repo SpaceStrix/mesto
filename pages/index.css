@@ -41,6 +41,6 @@
 
 @import url(../blocks/popup/_type/_image/popup_type_image.css);
 @import url(../blocks/img-container/img-container.css);
-@import url(../blocks/img-container/__img/_size/img-container__img_size.css);
+@import url(../blocks/img-container/__img/img-container__img.css);
 @import url(../blocks/img-container/__block/img-container__block.css);
 @import url(../blocks/img-container/__title/img-container__title.css);
