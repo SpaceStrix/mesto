@@ -29,11 +29,11 @@ const body = document.querySelector('.body');
 const template = document.querySelector('.element').content;
 const containerElements = document.querySelector('.elements');
 
-const formProfile = document.forms['popup__form-profile']; // испрвить имя формы
+const formProfile = document.forms['popup__form-profile'];
 const formInputName = formProfile.elements['name'];
 const formInputJob = formProfile.elements['about-me'];
 
-const formCreateElement = document.forms['popup__form_create-element']; // испрвить имя формы
+const formCreateElement = document.forms['popup__form-element']; // испрвить имя формы
 const formElementTitle = formCreateElement.elements['element-title'];
 const formElementImages = formCreateElement.elements['element-img'];
 
@@ -89,7 +89,6 @@ function closePopup(popup) {
 }
 
 //card
-
 function popupOpenImg(src, name) {
 	popupImg.querySelector('.img-container__img').setAttribute('src', src);
 	popupImg.querySelector('.img-container__title').textContent = name;
@@ -115,9 +114,9 @@ function createTemplateElement(src, name) {
 
 	return cloneElement;
 }
-const renderNewElement = () => {
+function renderNewElement() {
 	containerElements.prepend(createTemplateElement(formElementImages.value, formElementTitle.value));
-};
+}
 function handleLikeBtn(e) {
 	e.target.classList.toggle('element__like_active');
 }
