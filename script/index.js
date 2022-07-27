@@ -25,7 +25,7 @@ const initialCards = [
 	}
 ];
 
-const body = document.querySelector('.body');
+const popupAll = document.querySelectorAll('.popup');
 const template = document.querySelector('.element').content;
 const containerElements = document.querySelector('.elements');
 
@@ -50,8 +50,11 @@ const popupFigure = document.querySelector('.popup_type_image');
 const popupFigureImg = popupFigure.querySelector('.img-container__img');
 const popupFigureCaption = popupFigure.querySelector('.img-container__title');
 
+popupAll.forEach((popup) => {
+	popup.addEventListener('click', handleClosePopup);
+});
+
 // event
-body.addEventListener('click', closePopupHandler);
 btnAddElement.addEventListener('click', () => {
 	openPopup(popupAddElement);
 });
@@ -69,11 +72,10 @@ function handleFormProfileSubmit(e) {
 	setTextContentValue();
 	closePopup(popupEditProfile);
 }
-function closePopupHandler(e) {
+function handleClosePopup(e) {
 	const target = e.target;
-	const currentPopup = target.closest('.popup');
-	if (target.classList.contains('popup__close') || target === currentPopup) {
-		closePopup(currentPopup);
+	if (target.classList.contains('popup__close') || target.classList.contains('popup')) {
+		closePopup(e.currentTarget);
 	}
 }
 function setTextContentValue() {
