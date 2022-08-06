@@ -1,5 +1,4 @@
-const initialCards = [
-	{
+const initialCards = [{
 		name: 'Большая голубая дыра',
 		link: './images/elem-1.jpg'
 	},
@@ -50,6 +49,12 @@ const popupFigure = document.querySelector('.popup_type_image');
 const popupFigureImg = popupFigure.querySelector('.img-container__img');
 const popupFigureCaption = popupFigure.querySelector('.img-container__title');
 
+document.addEventListener('keydown', (e) => {
+	if (e.code === 'Escape') {
+		closePressKeyPopup()
+	}
+})
+
 popupAll.forEach((popup) => {
 	popup.addEventListener('click', handleClosePopup);
 });
@@ -58,7 +63,7 @@ popupAll.forEach((popup) => {
 btnAddElement.addEventListener('click', () => {
 	openPopup(popupAddElement);
 });
-btnEditProfile.addEventListener('click', function() {
+btnEditProfile.addEventListener('click', function () {
 	openPopup(popupEditProfile);
 	setPopupFieldValue();
 });
@@ -72,25 +77,36 @@ function handleFormProfileSubmit(e) {
 	setTextContentValue();
 	closePopup(popupEditProfile);
 }
+
 function handleClosePopup(e) {
 	const target = e.target;
 	if (target.classList.contains('popup__close') || target.classList.contains('popup')) {
 		closePopup(e.currentTarget);
 	}
 }
+
 function setTextContentValue() {
 	profileName.textContent = formInputName.value;
 	profileJob.textContent = formInputJob.value;
 }
+
 function setPopupFieldValue() {
 	formInputName.value = profileName.textContent;
 	formInputJob.value = profileJob.textContent;
 }
+
 function openPopup(popup) {
 	popup.classList.add('popup_opened');
 }
+
 function closePopup(popup) {
 	popup.classList.remove('popup_opened');
+}
+
+function closePressKeyPopup() {
+	popupAll.forEach(popup => {
+		closePopup(popup)
+	})
 }
 
 //card
@@ -100,12 +116,14 @@ function openPopupImg(src, name) {
 	popupFigureCaption.textContent = name;
 	openPopup(popupFigure);
 }
+
 function addElementInHtml(initialCards) {
 	initialCards.forEach((item) => {
 		const element = createTemplateElement(item.link, item.name);
 		containerElements.append(element);
 	});
 }
+
 function createTemplateElement(src, name) {
 	const cloneElement = template.querySelector('.element').cloneNode(true);
 	const elementImage = cloneElement.querySelector('.element__img');
@@ -120,6 +138,7 @@ function createTemplateElement(src, name) {
 
 	return cloneElement;
 }
+
 function renderNewElement() {
 	const valueInputImg = formElementImages.value;
 	const valueInputName = formElementTitle.value;
@@ -127,17 +146,22 @@ function renderNewElement() {
 
 	containerElements.prepend(newElem);
 }
+
 function handleLikeBtn(e) {
 	e.target.classList.toggle('element__like_active');
 }
+
 function handleDeleteBtn(e) {
 	e.target.closest('.element').remove();
 }
+
 function handleCreateElement(e) {
 	e.preventDefault();
 	renderNewElement();
 	closePopup(popupAddElement);
 	formCreateElement.reset();
 }
+
+
 
 addElementInHtml(initialCards);
