@@ -27,7 +27,6 @@
             <button class="profile__add-item" type="button"></button>
         </section>
         <!-- profile -->
-
         <section class="elements">
         </section>
         <!-- /.elements -->
@@ -38,12 +37,20 @@
 
     <div class="popup popup_type_edit">
         <div class="popup__container">
-            <h2 class="popup__title">Редактировать профиль</h2>
             <button class="popup__close" type="button"></button>
-            <form class="popup__form" name="popup__form-profile">
+            <form class="popup__form" name="popup__form-profile" novalidate>
                 <fieldset class="popup__input-container">
-                    <input type="text" name="name" class="popup__field" placeholder="Имя">
-                    <input type="text" name="about-me" class="popup__field" placeholder="О себе">
+                    <legend class="popup__title">Редактировать профиль</legend>
+
+                    <label class="popup__label">
+                        <input type="text" name="name" id="popup__name-input" class="popup__field" placeholder="Имя" minlength="2" maxlength="40" required>
+                        <span class="popup__name-input-error popup__input-error"></span>
+                    </label>
+
+                    <label class="popup__label">
+                        <input type="text" name="about" id="popup__about-input" class="popup__field" placeholder="О себе" minlength="2" maxlength="200" required>
+                        <span class="popup__about-input-error popup__input-error"></span>
+                    </label>
                 </fieldset>
                 <button type="submit" class="popup__btn-safe">Сохранить</button>
             </form>
@@ -52,14 +59,22 @@
 
     <div class="popup popup_type_new-card">
         <div class="popup__container">
-            <h2 class="popup__title">Новое место</h2>
             <button class="popup__close" type="button"></button>
 
-            <form class="popup__form" name="popup__form-element">
+            <form class="popup__form" name="popup__form-element" novalidate>
                 <fieldset class="popup__input-container">
-                    <input type="text" name="element-title" class="popup__field" placeholder="Название" required>
-                    <input type="text" name="element-img" class="popup__field" placeholder="Ссылка на картинку"
-                        required>
+            <legend class="popup__title">Новое место</legend>
+
+                    <label class="popup__label">
+                        <input type="text" name="element-title" id="popup__title-input" class="popup__field" placeholder="Название" minlength="2" maxlength="40" required>
+                        <span class="popup__title-input-error popup__input-error"></span>
+                    </label>
+
+                    <label class="popup__label">
+                        <input type="url" name="element-img" id="popup__url-input" class="popup__field" placeholder="Укажите ссылку" minlength="2" maxlength="200" required>
+                        <span class="popup__url-input-error popup__input-error"></span>
+                    </label>
+
                 </fieldset>
                 <button type="submit" class="popup__btn-safe">Создать</button>
             </form>
@@ -87,6 +102,7 @@
         </article>
 
     </template>
+    <script src="./script/validation.js"></script>
     <script src="./script/index.js"></script>
 </body>
 

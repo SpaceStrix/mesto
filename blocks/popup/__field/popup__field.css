@@ -9,6 +9,28 @@
 	margin-bottom: 0;
 }
 
-.popup__field:not(:last-child) {
-	margin-bottom: 30px;
+
+.popup__input-error {
+	font-weight: 400;
+	font-size: 12px;
+	line-height: 15px;
+	color: #FF0000;
+	min-height: 24px;
+	opacity: 0;
+	position: absolute;
+	top: 25px;
+}
+.form__input-error_active {
+	opacity: 1;
+}
+
+.popup__input_type_error {
+	border-bottom-color: red;
+}
+
+.popup__label {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	margin-top: 30px;
 }
