@@ -1,3 +1,6 @@
+import {hideInputError, selectors} from "./validation.js";
+
+
 const initialCards = [
   {
     name: "Большая голубая дыра",
@@ -56,6 +59,7 @@ popupAll.forEach((popup) => {
 });
 btnAddElement.addEventListener("click", () => {
   openPopup(popupAddElement);
+  formCreateElement.reset()
 });
 btnEditProfile.addEventListener("click", function () {
   openPopup(popupEditProfile);
@@ -94,6 +98,8 @@ function setPopupFieldValue() {
 }
 function openPopup(popup) {
   popup.classList.add("popup_opened");
+  hideInputError(formCreateElement,formElementTitle,selectors)
+  hideInputError(formCreateElement,formElementImages,selectors)
 }
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
@@ -156,3 +162,4 @@ function handleCreateElement(e) {
 }
 
 addElementInHtml(initialCards);
+
