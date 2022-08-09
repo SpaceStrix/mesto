@@ -1,5 +1,3 @@
-import {hideInputError, selectors} from "./validation.js";
-
 
 const initialCards = [
   {
@@ -67,11 +65,7 @@ btnEditProfile.addEventListener("click", function () {
 });
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
-document.addEventListener('keydown', (e) => {
-  if (e.code === 'Escape') {
-    closePressKeyPopup()
-  }
-})
+
 // popup
 function handleFormProfileSubmit(e) {
   e.preventDefault();
@@ -98,16 +92,16 @@ function setPopupFieldValue() {
 }
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  hideInputError(formCreateElement,formElementTitle,selectors)
-  hideInputError(formCreateElement,formElementImages,selectors)
+  document.addEventListener('keydown', closePressKeyPopup)
 }
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
+  document.removeEventListener('keydown', closePressKeyPopup)
 }
-function closePressKeyPopup() {
-  popupAll.forEach(popup => {
-    closePopup(popup)
-  })
+function closePressKeyPopup(e) {
+  if (e.code === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'))
+  }
 }
 
 //card
@@ -158,7 +152,6 @@ function handleCreateElement(e) {
   e.preventDefault();
   renderNewElement();
   closePopup(popupAddElement);
-  formCreateElement.reset();
 }
 
 addElementInHtml(initialCards);

@@ -16,17 +16,6 @@
 .popup__btn-safe:hover {
 	opacity: 0.8;
 }
-/*неактивная кнопка*/
-.popup__btn_disabled {
-	opacity: .2;
-	border: 1px solid #000000;
-	color: #000000;
-	background: transparent;
-
-
-	pointer-events: none;
-
-}
 
 @media screen and (min-width: 320px) and (max-width: 768px) {
 	.popup__btn-safe {
