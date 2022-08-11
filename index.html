@@ -20,11 +20,11 @@
                 <img src="./images/Avatar.jpg" alt="Жак-Ив Кусто -Исследователь океана" class="profile__avatar">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
-                    <button class="profile__edit" type="button"></button>
+                    <button class="profile__edit" type="button" aria-label="Кнопка редактирования профиля"></button>
                     <p class="profile__job">Исследователь океана</p>
                 </div>
             </div>
-            <button class="profile__add-item" type="button"></button>
+            <button class="profile__add-item" type="button" aria-label="Кнопка добавление карточки"></button>
         </section>
         <!-- profile -->
         <section class="elements">
@@ -37,7 +37,7 @@
 
     <div class="popup popup_type_edit">
         <div class="popup__container">
-            <button class="popup__close" type="button"></button>
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
             <form class="popup__form" name="popup__form-profile" novalidate>
                 <fieldset class="popup__input-container">
                     <legend class="popup__title">Редактировать профиль</legend>
@@ -59,7 +59,7 @@
 
     <div class="popup popup_type_new-card">
         <div class="popup__container">
-            <button class="popup__close" type="button"></button>
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
 
             <form class="popup__form" name="popup__form-element" novalidate>
                 <fieldset class="popup__input-container">
@@ -87,23 +87,23 @@
                 <img src="./" alt="" class="img-container__img">
                 <figcaption class="img-container__title">Новое место</figcaption>
             </figure>
-            <button class="popup__close" type="button"></button>
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
         </div>
     </div>
 
     <template class="element">
         <article class="element">
-            <button class="element__delete" type="button"></button>
+            <button class="element__delete" type="button" aria-label="Кнопка удаления карточки"></button>
             <img src="./images/elem-1.jpg" alt="Большая голубая дыра" class="element__img">
             <div class="element__title-group">
                 <h2 class="element__title">Большая голубая дыра </h2>
-                <button class="element__like" type="button"></button>
+                <button class="element__like" type="button" aria-label="Кнопка лайка"></button>
             </div>
         </article>
 
     </template>
-    <script src="./script/validation.js" type="module"></script>
     <script src="./script/index.js" type="module"></script>
+    <script src="./script/validation.js" type="module"></script>
 </body>
 
 </html>

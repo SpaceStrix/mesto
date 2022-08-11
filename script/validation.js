@@ -1,29 +1,22 @@
-const selectors = {
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__btn-safe',
-    inactiveButtonClass: 'popup__btn-safe_disabled',
-    inputErrorClass: 'popup__input_type_error',
-    errorClass: 'popup__input-error_active'
-}
+import configValidation from './index.js'
 
-function showInputError(form,formInput, errorMessage, selectors) {
+function showInputError(form,formInput, errorMessage, configValidation) {
     const formInputError = form.querySelector(`.${formInput.id}-error`)
-    formInput.classList.add(selectors.inputErrorClass)
-    formInputError.classList.add(selectors.errorClass)
+    formInput.classList.add(configValidation.inputErrorClass)
+    formInputError.classList.add(configValidation.errorClass)
     formInputError.textContent = errorMessage
 }
-function hideInputError(form,formInput,selectors) {
+function hideInputError(form,formInput,configValidation) {
     const formInputError = form.querySelector(`.${formInput.id}-error`)
-    formInput.classList.remove(selectors.inputErrorClass)
-    formInputError.classList.remove(selectors.errorClass)
+    formInput.classList.remove(configValidation.inputErrorClass)
+    formInputError.classList.remove(configValidation.errorClass)
     formInputError.textContent = ''
 }
-function checkInputValidity(form,formInput,selectors) {
+function checkInputValidity(form,formInput,configValidation) {
     if (!formInput.validity.valid) {
-        showInputError(form,formInput, formInput.validationMessage,selectors)
+        showInputError(form,formInput, formInput.validationMessage,configValidation)
     } else {
-        hideInputError(form,formInput,selectors)
+        hideInputError(form,formInput,configValidation)
     }
 }
 function hasInvalidInput(inputList) {
@@ -31,40 +24,35 @@ function hasInvalidInput(inputList) {
        return !input.validity.valid
    })
 }
-function toggleButtonState(inputList, formBtn,selectors) {
+function toggleButtonState(inputList, formBtn,configValidation) {
     if (hasInvalidInput(inputList)) {
-        formBtn.classList.add(selectors.inactiveButtonClass)
+        formBtn.classList.add(configValidation.inactiveButtonClass)
         formBtn.setAttribute('disabled', true)
     } else {
-        formBtn.classList.remove(selectors.inactiveButtonClass)
-        formBtn.removeAttribute('disabled', true)
+        formBtn.classList.remove(configValidation.inactiveButtonClass)
+        formBtn.removeAttribute('disabled')
     }
 }
-function setEventListeners(form, selectors) {
-    const inputList = [...form.querySelectorAll(selectors.inputSelector)]
-    const formBtn = form.querySelector(selectors.submitButtonSelector)
-    toggleButtonState(inputList, formBtn , selectors)
+function setEventListeners(form, configValidation) {
+    const inputList = [...form.querySelectorAll(configValidation.inputSelector)]
+    const formBtn = form.querySelector(configValidation.submitButtonSelector)
+    toggleButtonState(inputList, formBtn , configValidation)
     inputList.forEach((input)=> {
         input.addEventListener('input', ()=>{
-            checkInputValidity(form,input,selectors)
-            toggleButtonState(inputList, formBtn, selectors)
+            checkInputValidity(form,input,configValidation)
+            toggleButtonState(inputList, formBtn, configValidation)
         })
     })
 }
-function enableValidation(selectors) {
-    const formList = [...document.querySelectorAll(selectors.formSelector)]
+function enableValidation(configValidation) {
+    const formList = document.querySelectorAll(configValidation.formSelector)
     formList.forEach((form)=> {
         form.addEventListener('submit', (e)=>{
             e.preventDefault()
         })
-        setEventListeners(form,selectors)
+        setEventListeners(form,configValidation)
     })
 }
 
 
-function resetForm(selectors, form) {
-    // сброс формы, текста ошибок и классов ошибок
-};
-
-enableValidation(selectors);
-
+export  {enableValidation,hideInputError}

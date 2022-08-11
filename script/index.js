@@ -1,3 +1,14 @@
+import {enableValidation,hideInputError} from './validation.js'
+
+const configValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input',
+  submitButtonSelector: '.popup__btn-safe',
+  inactiveButtonClass: 'popup__btn-safe_disabled',
+  inputErrorClass: 'popup__input_type_error',
+  errorClass: 'popup__input-error_active'
+}
+
 
 const initialCards = [
   {
@@ -26,8 +37,8 @@ const initialCards = [
   },
 ];
 
-const popupAll = document.querySelectorAll(".popup");
-const template = document.querySelector(".element").content;
+const allPopups = document.querySelectorAll(".popup");
+const templateElement = document.querySelector(".element").content;
 const containerElements = document.querySelector(".elements");
 
 const formProfile = document.forms["popup__form-profile"];
@@ -52,25 +63,26 @@ const popupFigureImg = popupFigure.querySelector(".img-container__img");
 const popupFigureCaption = popupFigure.querySelector(".img-container__title");
 
 // events
-popupAll.forEach((popup) => {
-  popup.addEventListener("click", handleClosePopup);
-});
+
 btnAddElement.addEventListener("click", () => {
   openPopup(popupAddElement);
-  formCreateElement.reset()
+
+
 });
 btnEditProfile.addEventListener("click", function () {
+
   openPopup(popupEditProfile);
-  setPopupFieldValue();
+  setValueInputFormPopup();
 });
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
 
 // popup
+allPopups.forEach((popup) => {
+  popup.addEventListener("click", handleClosePopup);
+});
 function handleFormProfileSubmit(e) {
-  e.preventDefault();
-
-  setTextContentValue();
+  setTextContentProfile();
   closePopup(popupEditProfile);
 }
 function handleClosePopup(e) {
@@ -82,28 +94,43 @@ function handleClosePopup(e) {
     closePopup(e.currentTarget);
   }
 }
-function setTextContentValue() {
+function setTextContentProfile() {
   profileName.textContent = formInputName.value;
   profileJob.textContent = formInputJob.value;
 }
-function setPopupFieldValue() {
+function setValueInputFormPopup() {
   formInputName.value = profileName.textContent;
   formInputJob.value = profileJob.textContent;
 }
 function openPopup(popup) {
   popup.classList.add("popup_opened");
-  document.addEventListener('keydown', closePressKeyPopup)
+  document.addEventListener('keydown', closePopupOnEscKeyPress)
+  clearFormErrorOnPopupOpen()
 }
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
-  document.removeEventListener('keydown', closePressKeyPopup)
+  document.removeEventListener('keydown', closePopupOnEscKeyPress)
 }
-function closePressKeyPopup(e) {
+function closePopupOnEscKeyPress(e) {
   if (e.code === 'Escape') {
     closePopup(document.querySelector('.popup_opened'))
   }
 }
+function clearFormErrorOnPopupOpen() {
+  const formList = document.querySelectorAll(configValidation.formSelector);
+  const btnSafeForm = document.querySelector('.popup__btn-safe')
+  formList.forEach((form) => {
+    const inputList =  Array.from(form.querySelectorAll(configValidation.inputSelector))
+    inputList.forEach((formInput) => {
+      hideInputError(form,formInput,configValidation)
+    })
+    btnSafeForm.setAttribute('disabled', true)
+    btnSafeForm.classList.add(configValidation.inactiveButtonClass)
 
+    form.reset()
+  })
+
+}
 //card
 function openPopupImg(src, name) {
   popupFigureImg.src = src;
@@ -111,14 +138,14 @@ function openPopupImg(src, name) {
   popupFigureCaption.textContent = name;
   openPopup(popupFigure);
 }
-function addElementInHtml(initialCards) {
+function addInitialElements(initialCards) {
   initialCards.forEach((item) => {
-    const element = createTemplateElement(item.link, item.name);
+    const element = createNewElement(item.link, item.name);
     containerElements.append(element);
   });
 }
-function createTemplateElement(src, name) {
-  const cloneElement = template.querySelector(".element").cloneNode(true);
+function createNewElement(src, name) {
+  const cloneElement = templateElement.querySelector(".element").cloneNode(true);
   const elementImage = cloneElement.querySelector(".element__img");
   const elementTitle = cloneElement.querySelector(".element__title");
   elementImage.src = src;
@@ -138,7 +165,7 @@ function createTemplateElement(src, name) {
 function renderNewElement() {
   const valueInputImg = formElementImages.value;
   const valueInputName = formElementTitle.value;
-  const newElem = createTemplateElement(valueInputImg, valueInputName);
+  const newElem = createNewElement(valueInputImg, valueInputName);
 
   containerElements.prepend(newElem);
 }
@@ -152,7 +179,13 @@ function handleCreateElement(e) {
   e.preventDefault();
   renderNewElement();
   closePopup(popupAddElement);
+
 }
 
-addElementInHtml(initialCards);
 
+
+
+addInitialElements(initialCards);
+enableValidation(configValidation)
+
+export default configValidation
