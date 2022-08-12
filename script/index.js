@@ -72,7 +72,7 @@ btnAddElement.addEventListener("click", () => {
 btnEditProfile.addEventListener("click", function () {
 
   openPopup(popupEditProfile);
-  setValueInputFormPopup();
+  fillPopupEditProfileFields();
 });
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
@@ -82,7 +82,7 @@ allPopups.forEach((popup) => {
   popup.addEventListener("click", handleClosePopup);
 });
 function handleFormProfileSubmit(e) {
-  setTextContentProfile();
+  fillProfileFieldsFromPopup();
   closePopup(popupEditProfile);
 }
 function handleClosePopup(e) {
@@ -94,11 +94,11 @@ function handleClosePopup(e) {
     closePopup(e.currentTarget);
   }
 }
-function setTextContentProfile() {
+function fillProfileFieldsFromPopup() {
   profileName.textContent = formInputName.value;
   profileJob.textContent = formInputJob.value;
 }
-function setValueInputFormPopup() {
+function fillPopupEditProfileFields() {
   formInputName.value = profileName.textContent;
   formInputJob.value = profileJob.textContent;
 }
@@ -118,15 +118,16 @@ function closePopupOnEscKeyPress(e) {
 }
 function clearFormErrorOnPopupOpen() {
   const formList = document.querySelectorAll(configValidation.formSelector);
-  const btnSafeForm = document.querySelector('.popup__btn-safe')
   formList.forEach((form) => {
+    const btnSafeForm = form.querySelectorAll('.popup__btn-safe')
     const inputList =  Array.from(form.querySelectorAll(configValidation.inputSelector))
     inputList.forEach((formInput) => {
       hideInputError(form,formInput,configValidation)
+      btnSafeForm.forEach(btn => {
+        btn.setAttribute('disabled', true)
+        btn.classList.add(configValidation.inactiveButtonClass)
+      })
     })
-    btnSafeForm.setAttribute('disabled', true)
-    btnSafeForm.classList.add(configValidation.inactiveButtonClass)
-
     form.reset()
   })
 
@@ -188,4 +189,3 @@ function handleCreateElement(e) {
 addInitialElements(initialCards);
 enableValidation(configValidation)
 
-export default configValidation

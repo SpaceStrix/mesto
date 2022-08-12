@@ -1,4 +1,3 @@
-import configValidation from './index.js'
 
 function showInputError(form,formInput, errorMessage, configValidation) {
     const formInputError = form.querySelector(`.${formInput.id}-error`)
