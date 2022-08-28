@@ -86,7 +86,6 @@ btnEditProfile.addEventListener("click", function () {
   fillPopupEditProfileFields();
   //* Очистка формы при открытии
   profileValid.disableBtn()
-  profileValid.resetForm()
 });
 
 formProfile.addEventListener("submit", handleFormProfileSubmit);
