@@ -77,6 +77,7 @@ btnAddElement.addEventListener("click", () => {
   openPopup(popupAddElement);
   //* Очистка формы при открытии
   cardFormValid.resetForm()
+  cardFormValid.disableBtn()
 
 });
 
@@ -84,7 +85,7 @@ btnEditProfile.addEventListener("click", function () {
   openPopup(popupEditProfile);
   fillPopupEditProfileFields();
   //* Очистка формы при открытии
-  // profileValid.resetForm()
+  profileValid.disableBtn()
 });
 
 formProfile.addEventListener("submit", handleFormProfileSubmit);
