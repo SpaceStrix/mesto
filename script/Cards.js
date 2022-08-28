@@ -31,10 +31,14 @@ export default class Card {
 
     createCard() {
         this.card = this._getTemplate()
-        this._setEventListeners()
 
+        this.img = this.card.querySelector(this.config.cardImage)
+
+        this.img.src = this.link
+        this.img.alt = this.name
         this.card.querySelector(this.config.cardTitle).textContent = this.name
-        this.card.querySelector(this.config.cardImage).src = this.link
+
+        this._setEventListeners()
         return this.card
     }
 
@@ -43,7 +47,7 @@ export default class Card {
     }
 
     _handleDeleteBtn() {
-        this.card.querySelector(this.config.btnDeleteCard).closest(this.config.card).remove();
+        this.card.remove();
     }
 
     _fullImg() {
@@ -57,7 +61,7 @@ export default class Card {
         this.card.querySelector(this.config.btnDeleteCard).addEventListener('click', () => {
             this._handleDeleteBtn()
         })
-        this.card.querySelector(this.config.cardImage).addEventListener('click', () => {
+        this.img.addEventListener('click', () => {
             this._fullImg()
         })
 

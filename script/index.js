@@ -73,17 +73,20 @@ const popupFigureImg = popupFigure.querySelector(".img-container__img");
 const popupFigureCaption = popupFigure.querySelector(".img-container__title");
 
 // events
-
 btnAddElement.addEventListener("click", () => {
   openPopup(popupAddElement);
-
+  //* Очистка формы при открытии
+  cardFormValid.resetForm()
 
 });
-btnEditProfile.addEventListener("click", function () {
 
+btnEditProfile.addEventListener("click", function () {
   openPopup(popupEditProfile);
   fillPopupEditProfileFields();
+  //* Очистка формы при открытии
+  profileValid.resetForm()
 });
+
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
 
@@ -126,11 +129,6 @@ function fillPopupEditProfileFields() {
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', closePopupOnEscKeyPress)
-
-  //* Очистка формы при открытии
-  cardFormValid.resetForm()
-  profileValid.resetForm()
-
 }
 
 function closePopup(popup) {
@@ -152,15 +150,18 @@ function openPopupImg(name, link) {
   openPopup(popupFigure);
 }
 
+// Экземпляр класса Card
+function mainCardRender(item) {
+  const cardElem = new Card(item, config, openPopupImg)
+  return cardElem.createCard()
+}
+
 //! Инит карт
 function addInitialElements(initialCards) {
   initialCards.forEach((item) => {
-    const cardElem = new Card(item, config, openPopupImg)
-    cardElem.createCard()
-    containerElements.append(cardElem.createCard());
+    containerElements.append(mainCardRender(item));
   });
 }
-
 
 // ! Экземляр для новой карточки
 function renderNewElement() {
@@ -168,10 +169,8 @@ function renderNewElement() {
     name: formElementTitle.value,
     link: formElementImages.value
   }
-  const newCardElem = new Card(newCreateCard, config, openPopupImg)
-  containerElements.prepend(newCardElem.createCard());
+  containerElements.prepend(mainCardRender(newCreateCard));
 }
-
 
 
 //! экземпляр класса FormValidator для форм 
