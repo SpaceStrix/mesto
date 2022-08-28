@@ -1,4 +1,6 @@
-import {enableValidation,hideInputError} from './validation.js'
+import Card from "./Cards.js";
+import FormValidator from "./FormValidator.js";
+
 
 const configValidation = {
   formSelector: '.popup__form',
@@ -9,36 +11,44 @@ const configValidation = {
   errorClass: 'popup__input-error_active'
 }
 
+const config = {
+  templateElement: '.template-element',
+  card: '.element',
+  cardImage: '.element__img',
+  cardTitle: '.element__title',
+  btnDeleteCard: '.element__delete',
+  btnLikeCard: '.element__like',
+  btnCardLikeActive: 'element__like_active',
+}
 
-const initialCards = [
-  {
-    name: "Большая голубая дыра",
-    link: "./images/elem-1.jpg",
+
+const initialCards = [{
+    name: "Baily Abrahams",
+    link: "https://images.unsplash.com/photo-1494344670326-077cb5f4d3e5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1828&q=80",
   },
   {
-    name: "Амазонка",
-    link: "./images/elem-2.jpg",
+    name: "Andreas Gücklhorn",
+    link: "https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2064&q=80",
   },
   {
-    name: "Большой Барьерный риф",
-    link: "./images/elem-3.jpg",
+    name: "Michelle Spollen",
+    link: "https://images.unsplash.com/photo-1541599468348-e96984315921?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1520&q=80",
   },
   {
-    name: "Антарктида ",
-    link: "./images/elem-4.jpg",
+    name: "JOHN TOWNER",
+    link: "https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80",
   },
   {
-    name: "Мадагаскар",
-    link: "./images/elem-5.jpg",
+    name: "Michael Olsen",
+    link: "https://images.unsplash.com/photo-1526035266069-fc237c5baddd?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80",
   },
   {
-    name: "Байкал",
-    link: "./images/elem-6.jpg",
+    name: "Trevor Bobyk",
+    link: "https://images.unsplash.com/photo-1507808130096-d3e6ece8eabf?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1548&q=80",
   },
 ];
 
-const allPopups = document.querySelectorAll(".popup");
-const templateElement = document.querySelector(".element").content;
+const allPopUps = document.querySelectorAll(".popup");
 const containerElements = document.querySelector(".elements");
 
 const formProfile = document.forms["popup__form-profile"];
@@ -78,13 +88,21 @@ formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
 
 // popup
-allPopups.forEach((popup) => {
+allPopUps.forEach((popup) => {
   popup.addEventListener("click", handleClosePopup);
 });
+
 function handleFormProfileSubmit(e) {
   fillProfileFieldsFromPopup();
   closePopup(popupEditProfile);
 }
+
+function handleCreateElement(e) {
+  e.preventDefault();
+  renderNewElement();
+  closePopup(popupAddElement);
+}
+
 function handleClosePopup(e) {
   const target = e.target;
   if (
@@ -94,98 +112,72 @@ function handleClosePopup(e) {
     closePopup(e.currentTarget);
   }
 }
+
 function fillProfileFieldsFromPopup() {
   profileName.textContent = formInputName.value;
   profileJob.textContent = formInputJob.value;
 }
+
 function fillPopupEditProfileFields() {
   formInputName.value = profileName.textContent;
   formInputJob.value = profileJob.textContent;
 }
+
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', closePopupOnEscKeyPress)
-  clearFormErrorOnPopupOpen()
+
+  cardFormValid.resetForm()
+  profileValid.resetForm()
+
 }
+
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener('keydown', closePopupOnEscKeyPress)
 }
+
 function closePopupOnEscKeyPress(e) {
   if (e.code === 'Escape') {
     closePopup(document.querySelector('.popup_opened'))
   }
 }
-function clearFormErrorOnPopupOpen() {
-  const formList = document.querySelectorAll(configValidation.formSelector);
-  formList.forEach((form) => {
-    const btnSafeForm = form.querySelectorAll('.popup__btn-safe')
-    const inputList =  Array.from(form.querySelectorAll(configValidation.inputSelector))
-    inputList.forEach((formInput) => {
-      hideInputError(form,formInput,configValidation)
-      btnSafeForm.forEach(btn => {
-        btn.setAttribute('disabled', true)
-        btn.classList.add(configValidation.inactiveButtonClass)
-      })
-    })
-    form.reset()
-  })
 
-}
-//card
-function openPopupImg(src, name) {
-  popupFigureImg.src = src;
+//! Фулл картинка
+function openPopupImg(name, link) {
   popupFigureImg.alt = name;
+  popupFigureImg.src = link;
   popupFigureCaption.textContent = name;
   openPopup(popupFigure);
 }
+
+//! Инит карт
 function addInitialElements(initialCards) {
   initialCards.forEach((item) => {
-    const element = createNewElement(item.link, item.name);
-    containerElements.append(element);
+    const cardElem = new Card(item, config, openPopupImg)
+    cardElem.createCard()
+    containerElements.append(cardElem.createCard());
   });
 }
-function createNewElement(src, name) {
-  const cloneElement = templateElement.querySelector(".element").cloneNode(true);
-  const elementImage = cloneElement.querySelector(".element__img");
-  const elementTitle = cloneElement.querySelector(".element__title");
-  elementImage.src = src;
-  elementImage.alt = `Изображение ${name}`;
-  elementTitle.textContent = name;
 
-  elementImage.addEventListener("click", () => openPopupImg(src, name));
-  cloneElement
-    .querySelector(".element__delete")
-    .addEventListener("click", handleDeleteBtn);
-  cloneElement
-    .querySelector(".element__like")
-    .addEventListener("click", handleLikeBtn);
 
-  return cloneElement;
-}
+// ! Экземляр для новой карточки
 function renderNewElement() {
-  const valueInputImg = formElementImages.value;
-  const valueInputName = formElementTitle.value;
-  const newElem = createNewElement(valueInputImg, valueInputName);
-
-  containerElements.prepend(newElem);
-}
-function handleLikeBtn(e) {
-  e.target.classList.toggle("element__like_active");
-}
-function handleDeleteBtn(e) {
-  e.target.closest(".element").remove();
-}
-function handleCreateElement(e) {
-  e.preventDefault();
-  renderNewElement();
-  closePopup(popupAddElement);
-
+  const newCreateCard = {
+    name: formElementTitle.value,
+    link: formElementImages.value
+  }
+  const newCardElem = new Card(newCreateCard, config, openPopupImg)
+  containerElements.prepend(newCardElem.createCard());
 }
 
 
+
+//! экземпляр класса FormValidator для форм 
+const cardFormValid = new FormValidator(configValidation, formCreateElement)
+cardFormValid.enableValidation()
+const profileValid = new FormValidator(configValidation, formProfile)
+profileValid.enableValidation()
 
 
 addInitialElements(initialCards);
-enableValidation(configValidation)
-
