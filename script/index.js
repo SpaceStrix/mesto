@@ -127,6 +127,7 @@ function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', closePopupOnEscKeyPress)
 
+  //* Очистка формы при открытии
   cardFormValid.resetForm()
   profileValid.resetForm()
 
