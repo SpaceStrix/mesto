@@ -86,6 +86,7 @@ btnEditProfile.addEventListener("click", function () {
   fillPopupEditProfileFields();
   //* Очистка формы при открытии
   profileValid.disableBtn()
+  profileValid.resetForm()
 });
 
 formProfile.addEventListener("submit", handleFormProfileSubmit);
@@ -151,15 +152,18 @@ function openPopupImg(name, link) {
   openPopup(popupFigure);
 }
 
+// Экземпляр класса Card
+function mainCardRender(item) {
+  const cardElem = new Card(item, config, openPopupImg)
+  return cardElem.createCard()
+}
+
 //! Инит карт
 function addInitialElements(initialCards) {
   initialCards.forEach((item) => {
-    const cardElem = new Card(item, config, openPopupImg)
-    cardElem.createCard()
-    containerElements.append(cardElem.createCard());
+    containerElements.append(mainCardRender(item));
   });
 }
-
 
 // ! Экземляр для новой карточки
 function renderNewElement() {
@@ -167,10 +171,8 @@ function renderNewElement() {
     name: formElementTitle.value,
     link: formElementImages.value
   }
-  const newCardElem = new Card(newCreateCard, config, openPopupImg)
-  containerElements.prepend(newCardElem.createCard());
+  containerElements.prepend(mainCardRender(newCreateCard));
 }
-
 
 
 //! экземпляр класса FormValidator для форм 
