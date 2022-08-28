@@ -73,17 +73,20 @@ const popupFigureImg = popupFigure.querySelector(".img-container__img");
 const popupFigureCaption = popupFigure.querySelector(".img-container__title");
 
 // events
-
 btnAddElement.addEventListener("click", () => {
   openPopup(popupAddElement);
-
+  //* Очистка формы при открытии
+  cardFormValid.resetForm()
 
 });
-btnEditProfile.addEventListener("click", function () {
 
+btnEditProfile.addEventListener("click", function () {
   openPopup(popupEditProfile);
   fillPopupEditProfileFields();
+  //* Очистка формы при открытии
+  // profileValid.resetForm()
 });
+
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
 
@@ -126,11 +129,6 @@ function fillPopupEditProfileFields() {
 function openPopup(popup) {
   popup.classList.add("popup_opened");
   document.addEventListener('keydown', closePopupOnEscKeyPress)
-
-  //* Очистка формы при открытии
-  cardFormValid.resetForm()
-  profileValid.resetForm()
-
 }
 
 function closePopup(popup) {
