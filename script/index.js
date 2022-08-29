@@ -76,8 +76,7 @@ const popupFigureCaption = popupFigure.querySelector(".img-container__title");
 btnAddElement.addEventListener("click", () => {
   openPopup(popupAddElement);
   //* Очистка формы при открытии
-  cardFormValid.resetForm()
-  cardFormValid.disableBtn()
+  resetFormCard(formCreateElement)
 
 });
 
@@ -85,8 +84,10 @@ btnEditProfile.addEventListener("click", function () {
   openPopup(popupEditProfile);
   fillPopupEditProfileFields();
   //* Очистка формы при открытии
-  profileValid.disableBtn()
+  resetFormProfile(formProfile)
 });
+
+
 
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
@@ -171,6 +172,19 @@ function renderNewElement() {
     link: formElementImages.value
   }
   containerElements.prepend(mainCardRender(newCreateCard));
+}
+//! Очистка формы
+function resetFormProfile(form) {
+  form.querySelectorAll(configValidation.inputSelector).forEach(input => {
+    profileValid.resetForm(input)
+  })
+}
+//! Очистка формы
+function resetFormCard(form) {
+  form.querySelectorAll(configValidation.inputSelector).forEach(input => {
+    cardFormValid.resetForm(input)
+  })
+  form.reset()
 }
 
 

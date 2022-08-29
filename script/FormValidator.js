@@ -51,11 +51,7 @@ export default class FormValidator {
     }
 
     _toggleButtonState() {
-        if (this._hasInvalidInput(this.inputList)) {
-            this.disableBtn()
-        } else {
-            this._enableBtn()
-        }
+        this._hasInvalidInput(this.inputList) ? this.disableBtn() : this._enableBtn()
     }
 
     disableBtn() {
@@ -68,8 +64,9 @@ export default class FormValidator {
     }
 
 
-    resetForm() {
-        this.form.reset()
+    resetForm(input) {
+        this._hideInputError(input)
+        this.disableBtn()
     }
 
 
