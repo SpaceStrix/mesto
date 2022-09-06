@@ -63,7 +63,6 @@ export default class FormValidator {
         this.btnForm.removeAttribute('disabled', false)
     }
 
-
     resetForm(input) {
         this._hideInputError(input)
         this.disableBtn()

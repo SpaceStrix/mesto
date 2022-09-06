@@ -1,5 +1,16 @@
 import Card from "./Cards.js";
 import FormValidator from "./FormValidator.js";
+import {
+  Popup
+} from "./Popup.js";
+
+import {
+  PopupWithImage
+} from './PopupWithImage.js'
+
+import {
+  Section
+} from "./Section.js";
 
 
 const configValidation = {
@@ -22,7 +33,7 @@ const config = {
 }
 
 
-const initialCards = [{
+const listCard = [{
     name: "Baily Abrahams",
     link: "https://images.unsplash.com/photo-1494344670326-077cb5f4d3e5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1828&q=80",
   },
@@ -48,8 +59,11 @@ const initialCards = [{
   },
 ];
 
-const allPopUps = document.querySelectorAll(".popup");
-const containerElements = document.querySelector(".elements");
+// const allPopUps = document.querySelectorAll(".popup");
+
+const containerElements = ".elements";
+
+
 
 const formProfile = document.forms["popup__form-profile"];
 const formInputName = formProfile.elements["name"];
@@ -65,6 +79,8 @@ const profileJob = document.querySelector(".profile__job");
 const btnEditProfile = document.querySelector(".profile__edit");
 const btnAddElement = document.querySelector(".profile__add-item");
 
+
+
 const popupEditProfile = document.querySelector(".popup_type_edit");
 const popupAddElement = document.querySelector(".popup_type_new-card");
 
@@ -72,16 +88,25 @@ const popupFigure = document.querySelector(".popup_type_image");
 const popupFigureImg = popupFigure.querySelector(".img-container__img");
 const popupFigureCaption = popupFigure.querySelector(".img-container__title");
 
-// events
+
+//*  Экземпляр класса Popup
+const popup = new Popup(popupAddElement)
+const popupProfile = new Popup(popupEditProfile)
+popupProfile.setEventListeners()
+popup.setEventListeners()
+//*  Экземпляр класса Popup
+
+
+//! КЛИК ПО КНОПКЕ СОЗДАНИЯ ЭЛЕМЕНТА
 btnAddElement.addEventListener("click", () => {
-  openPopup(popupAddElement);
+  popup.open();
   //* Очистка формы при открытии
   resetFormCard(formCreateElement)
 
 });
-
+//! КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
 btnEditProfile.addEventListener("click", function () {
-  openPopup(popupEditProfile);
+  popupProfile.open();
   fillPopupEditProfileFields();
   //* Очистка формы при открытии
   resetFormProfile(formProfile)
@@ -92,32 +117,36 @@ btnEditProfile.addEventListener("click", function () {
 formProfile.addEventListener("submit", handleFormProfileSubmit);
 formCreateElement.addEventListener("submit", handleCreateElement);
 
-// popup
-allPopUps.forEach((popup) => {
-  popup.addEventListener("click", handleClosePopup);
-});
-
 function handleFormProfileSubmit(e) {
   fillProfileFieldsFromPopup();
-  closePopup(popupEditProfile);
+  // closePopup(popupEditProfile);
+  popupProfile.close();
 }
+
+
+// popup
+// allPopUps.forEach((popup) => {
+//   popup.addEventListener("click", handleClosePopup);
+// });
 
 function handleCreateElement(e) {
+  popup.close()
   e.preventDefault();
   renderNewElement();
-  closePopup(popupAddElement);
 }
 
-function handleClosePopup(e) {
-  const target = e.target;
-  if (
-    target.classList.contains("popup__close") ||
-    target.classList.contains("popup")
-  ) {
-    closePopup(e.currentTarget);
-  }
-}
+// function handleClosePopup(e) {
+//   const target = e.target;
+//   if (
+//     target.classList.contains("popup__close") ||
+//     target.classList.contains("popup")
+//   ) {
+//     closePopup(e.currentTarget);
+//   }
+// }
 
+
+// ! Профиль пока не трогаем
 function fillProfileFieldsFromPopup() {
   profileName.textContent = formInputName.value;
   profileJob.textContent = formInputJob.value;
@@ -128,23 +157,24 @@ function fillPopupEditProfileFields() {
   formInputJob.value = profileJob.textContent;
 }
 
-function openPopup(popup) {
-  popup.classList.add("popup_opened");
-  document.addEventListener('keydown', closePopupOnEscKeyPress)
-}
+// function openPopup(popup) {
+//   popup.classList.add("popup_opened");
+//   document.addEventListener('keydown', closePopupOnEscKeyPress)
+// }
 
-function closePopup(popup) {
-  popup.classList.remove("popup_opened");
-  document.removeEventListener('keydown', closePopupOnEscKeyPress)
-}
+// function closePopup(popup) {
+//   popup.classList.remove("popup_opened");
+//   document.removeEventListener('keydown', closePopupOnEscKeyPress)
+// }
 
-function closePopupOnEscKeyPress(e) {
-  if (e.code === 'Escape') {
-    closePopup(document.querySelector('.popup_opened'))
-  }
-}
+// function closePopupOnEscKeyPress(e) {
+//   if (e.code === 'Escape') {
+//     closePopup(document.querySelector('.popup_opened'))
+//   }
+// }
 
 //! Фулл картинка
+
 function openPopupImg(name, link) {
   popupFigureImg.alt = name;
   popupFigureImg.src = link;
@@ -152,27 +182,62 @@ function openPopupImg(name, link) {
   openPopup(popupFigure);
 }
 
-// Экземпляр класса Card
-function mainCardRender(item) {
-  const cardElem = new Card(item, config, openPopupImg)
-  return cardElem.createCard()
-}
 
-//! Инит карт
-function addInitialElements(initialCards) {
-  initialCards.forEach((item) => {
-    containerElements.append(mainCardRender(item));
-  });
-}
 
-// ! Экземляр для новой карточки
-function renderNewElement() {
-  const newCreateCard = {
-    name: formElementTitle.value,
-    link: formElementImages.value
+
+
+// инстанс класса Section
+
+const sectionCardList = new Section({
+  item: listCard,
+  renderer: (item) => {
+    // Экземпляр класса Card
+    const cardElem = new Card(item, config, openPopupImg)
+    const catdElement = cardElem.createCard()
+
+    sectionCardList.addItem(catdElement);
+
   }
-  containerElements.prepend(mainCardRender(newCreateCard));
-}
+}, containerElements)
+
+sectionCardList.renderItems()
+
+
+
+
+
+
+//* Экземпляр класса Card
+// function rednerCards(item) {
+//   const cardElem = new Card(item, config, openPopupImg)
+//   return cardElem.createCard()
+// }
+
+// !Инит карт
+
+// function addInitialElements(listCard) {
+//   listCard.forEach((item) => {
+//     containerElements.append(rednerCards(item));
+//   });
+// }
+
+
+
+
+
+
+
+//! Экземляр для новой карточки
+// function renderNewElement() {
+//   const newCreateCard = {
+//     name: formElementTitle.value,
+//     link: formElementImages.value
+//   }
+//   containerElements.prepend(rednerCards(newCreateCard));
+// }
+
+
+
 //! Очистка формы
 function resetFormProfile(form) {
   form.querySelectorAll(configValidation.inputSelector).forEach(input => {
@@ -195,4 +260,4 @@ const profileValid = new FormValidator(configValidation, formProfile)
 profileValid.enableValidation()
 
 
-addInitialElements(initialCards);
+// addInitialElements(listCard);
