@@ -28,6 +28,10 @@ export class Section {
         this.container.append(card)
     }
 
+    addItemOne(newCard) {
+        this.container.prepend(newCard)
+    }
+
 
     renderItems() {
         this.item.forEach(card => {

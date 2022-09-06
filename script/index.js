@@ -132,7 +132,7 @@ function handleFormProfileSubmit(e) {
 function handleCreateElement(e) {
   popup.close()
   e.preventDefault();
-  renderNewElement();
+  renderNewCard();
 }
 
 // function handleClosePopup(e) {
@@ -184,34 +184,44 @@ function openPopupImg(name, link) {
 
 
 
+//* Экземпляр класса Card
+function rednerCards(item) {
+  const cardElem = new Card(item, config, openPopupImg)
+  return cardElem.createCard()
+}
 
 
 // инстанс класса Section
-
 const sectionCardList = new Section({
   item: listCard,
   renderer: (item) => {
-    // Экземпляр класса Card
-    const cardElem = new Card(item, config, openPopupImg)
-    const catdElement = cardElem.createCard()
-
-    sectionCardList.addItem(catdElement);
-
+    sectionCardList.addItem(rednerCards(item));
   }
 }, containerElements)
 
 sectionCardList.renderItems()
 
+function renderNewCard() {
+  const newCreateCard = {
+    name: formElementTitle.value,
+    link: formElementImages.value
+  }
+  //* инстанс для новой карточки // поправить
+  const sectionCardList2 = new Section({
+    item: newCreateCard,
+    renderer: (newCreateCard) => {
+      sectionCardList2.addItem(rednerCards(newCreateCard));
+
+    }
+  }, containerElements)
+  sectionCardList2.addItemOne(rednerCards(newCreateCard));
+}
 
 
 
 
 
-//* Экземпляр класса Card
-// function rednerCards(item) {
-//   const cardElem = new Card(item, config, openPopupImg)
-//   return cardElem.createCard()
-// }
+
 
 // !Инит карт
 
@@ -222,19 +232,9 @@ sectionCardList.renderItems()
 // }
 
 
-
-
-
-
-
 //! Экземляр для новой карточки
-// function renderNewElement() {
-//   const newCreateCard = {
-//     name: formElementTitle.value,
-//     link: formElementImages.value
-//   }
-//   containerElements.prepend(rednerCards(newCreateCard));
-// }
+
+
 
 
 
