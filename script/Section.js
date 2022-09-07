@@ -24,11 +24,11 @@ export class Section {
         this.container = document.querySelector(containerElements)
     }
 
-    addItem(card) {
+    addListItem(card) {
         this.container.append(card)
     }
 
-    addItemOne(newCard) {
+    addNewCard(newCard) {
         this.container.prepend(newCard)
     }
 

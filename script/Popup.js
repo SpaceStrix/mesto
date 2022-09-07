@@ -18,21 +18,23 @@ export class Popup {
     open() {
         this.popup.classList.add("popup_opened")
         this.document.addEventListener('keydown', this._handleEscClose)
+        this.setEventListeners() // удалить
     }
 
     close() {
         this.popup.classList.remove("popup_opened")
         this.document.removeEventListener('keydown', this._handleEscClose)
+
     }
 
     _handleEscClose(e) {
-        if (e.key === 'Escape') return this.close()
+        if (e.key === 'Escape') this.close()
     }
 
     setEventListeners() {
         this.popup.addEventListener('click', (e) => {
             const target = e.target
-            if (target.classList.contains("popup__close") || target.classList.contains("popup_opened")) return this.close()
+            if (target.classList.contains("popup__close") || target.classList.contains("popup_opened")) this.close()
         })
 
     }

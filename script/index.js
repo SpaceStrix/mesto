@@ -85,8 +85,9 @@ const popupEditProfile = document.querySelector(".popup_type_edit");
 const popupAddElement = document.querySelector(".popup_type_new-card");
 
 const popupFigure = document.querySelector(".popup_type_image");
-const popupFigureImg = popupFigure.querySelector(".img-container__img");
-const popupFigureCaption = popupFigure.querySelector(".img-container__title");
+
+const popupFigureImg = ".img-container__img";
+const popupFigureCaption = ".img-container__title"; // исправить имя класса на popupFigureCaption
 
 
 //*  Экземпляр класса Popup
@@ -147,6 +148,8 @@ function handleCreateElement(e) {
 
 
 // ! Профиль пока не трогаем
+
+
 function fillProfileFieldsFromPopup() {
   profileName.textContent = formInputName.value;
   profileJob.textContent = formInputJob.value;
@@ -175,12 +178,18 @@ function fillPopupEditProfileFields() {
 
 //! Фулл картинка
 
+// function openPopupImg(name, link) {
+//   popupFigureImg.alt = name;
+//   popupFigureImg.src = link;
+//   popupFigureCaption.textContent = name;
+//   // openPopup(popupFigure);
+// }
+
 function openPopupImg(name, link) {
-  popupFigureImg.alt = name;
-  popupFigureImg.src = link;
-  popupFigureCaption.textContent = name;
-  openPopup(popupFigure);
+  const openImg = new PopupWithImage(popupFigure, popupFigureCaption, popupFigureImg)
+  openImg.open(name, link)
 }
+
 
 
 
@@ -195,7 +204,7 @@ function rednerCards(item) {
 const sectionCardList = new Section({
   item: listCard,
   renderer: (item) => {
-    sectionCardList.addItem(rednerCards(item));
+    sectionCardList.addListItem(rednerCards(item));
   }
 }, containerElements)
 
@@ -210,11 +219,11 @@ function renderNewCard() {
   const sectionCardList2 = new Section({
     item: newCreateCard,
     renderer: (newCreateCard) => {
-      sectionCardList2.addItem(rednerCards(newCreateCard));
+      sectionCardList2.addListItem(rednerCards(newCreateCard));
 
     }
   }, containerElements)
-  sectionCardList2.addItemOne(rednerCards(newCreateCard));
+  sectionCardList2.addNewCard(rednerCards(newCreateCard));
 }
 
 
