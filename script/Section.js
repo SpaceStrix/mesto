@@ -12,30 +12,30 @@
 
 //! У класса `Section` нет своей разметки. Он получает разметку через функцию-колбэк и вставляет её в контейнер.
 
-
-
 export class Section {
-    constructor({
-        item, // массив карточек
-        renderer // это функция, которая отвечает за создание и отрисовку данных на странице.
-    }, containerElements) {
-        this.item = item
-        this.renderer = renderer
-        this.container = document.querySelector(containerElements)
-    }
+  constructor(
+    {
+      item, // массив карточек
+      renderer, // это функция, которая отвечает за создание и отрисовку данных на странице.
+    },
+    containerElements
+  ) {
+    this.item = item;
+    this.renderer = renderer;
+    this.container = document.querySelector(containerElements);
+  }
 
-    addListItem(card) {
-        this.container.append(card)
-    }
+  addListItem(card) {
+    this.container.append(card);
+  }
 
-    addNewCard(newCard) {
-        this.container.prepend(newCard)
-    }
+  addNewCard(newCard) {
+    this.container.prepend(newCard);
+  }
 
-
-    renderItems() {
-        this.item.forEach(card => {
-            this.renderer(card);
-        });
-    }
+  renderItems() {
+    this.item.forEach(card => {
+      this.renderer(card);
+    });
+  }
 }
