@@ -51,7 +51,17 @@ const listCard = [
   },
 ];
 
+const selectors = {
+  popupAddElement: ".popup_type_new-card",
+  popupEditProfile: ".popup_type_edit",
+  popupFigure: ".popup_type_image",
+};
+
 const containerElements = ".elements";
+const profileName = ".profile__name";
+const profileJob = ".profile__job";
+const popupFigureImg = ".img-container__img";
+const popupFigureCaption = ".img-container__title";
 
 const formProfile = document.forms["popup__form-profile"];
 const formInputName = document.querySelector("#popup__name-input");
@@ -61,91 +71,71 @@ const formCreateElement = document.forms["popup__form-element"];
 const formElementTitle = formCreateElement.elements["element-title"];
 const formElementImages = formCreateElement.elements["element-img"];
 
-const profileName = document.querySelector(".profile__name");
-const profileJob = document.querySelector(".profile__job");
-
 const btnEditProfile = document.querySelector(".profile__edit");
 const btnAddElement = document.querySelector(".profile__add-item");
 
+//POPUP
 const popupAddElement = document.querySelector(".popup_type_new-card");
 const popupEditProfile = document.querySelector(".popup_type_edit");
-
 const popupFigure = document.querySelector(".popup_type_image");
 
-const popupFigureImg = ".img-container__img";
-const popupFigureCaption = ".img-container__title"; // исправить имя класса на popupFigureCaption
-
-//! ------------------------
+// ** Экземпляр PopupWithForm Card** //
 const popupWithFormCard = new PopupWithForm(
   popupAddElement,
   handleCreateElement
 );
 popupWithFormCard.setEventListeners();
-//! ------------------------
 
-//! ------------------------
+//****************** CLICK BUTTON TO OPEN ******************
+btnAddElement.addEventListener("click", () => {
+  popupWithFormCard.open();
+  //* Очистка формы при открытии
+  cardFormValid.clearForm();
+});
+
+//****************** SUBMIT ******************
+function handleCreateElement() {
+  renderNewCard();
+  popupWithFormCard.close();
+}
+
+// ** Экземпляр UserInfo ** //
+const userInfo = new UserInfo({ profileName, profileJob });
+
+// ** Экземпляр PopupWithForm for Profile** //
 const popupWithFormProfile = new PopupWithForm(
   popupEditProfile,
   handleFormProfileSubmit
 );
 popupWithFormProfile.setEventListeners();
-//! ------------------------
 
-//****************** CLICK BUTTON TO OPEN ******************
-
-//! КЛИК ПО КНОПКЕ СОЗДАНИЯ ЭЛЕМЕНТА
-btnAddElement.addEventListener("click", () => {
-  popupWithFormCard.open();
-
-  //* Очистка формы при открытии
-  formCreateElement
-    .querySelectorAll(configValidation.inputSelector)
-    .forEach(input => {
-      cardFormValid.resetForm(input);
-    });
-});
+function handleFormProfileSubmit(data) {
+  userInfo.setUserInfo(data);
+}
 
 //! КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
 btnEditProfile.addEventListener("click", function () {
-  popupWithFormProfile.open();
-  fillPopupEditProfileFields();
+  const user = userInfo.getUserInfo();
 
-  // Удалить
-  const objValues = popupWithFormProfile._getInputValues();
-  const userInf = new UserInfo(objValues);
-  userInf.getUserInfo();
+  formInputName.value = user.name;
+  formInputJob.value = user.about;
+
+  popupWithFormProfile.open();
 
   //* Очистка формы при открытии
-  formProfile
-    .querySelectorAll(configValidation.inputSelector)
-    .forEach(input => {
-      profileValid.resetForm(input);
-    });
+  profileValid.clearForm();
 });
-//****************** CLICK BUTTON TO OPEN ******************
 
-//****************** SUBMIT ******************
-function handleCreateElement() {
-  renderNewCard();
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
 
-  popupWithFormCard.close();
-}
-function handleFormProfileSubmit() {
-  fillProfileFieldsFromPopup();
-
-  popupWithFormProfile.close();
-}
-//****************** SUBMIT ******************
-
-// ! Профиль пока не трогаем
-function fillProfileFieldsFromPopup() {
-  profileName.textContent = formInputName.value;
-  profileJob.textContent = formInputJob.value;
-}
-function fillPopupEditProfileFields() {
-  formInputName.value = profileName.textContent;
-  formInputJob.value = profileJob.textContent;
-}
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
+//! ------------------------ popupWithFormProfile  PopupWithForm
 
 function openPopupImg(name, link) {
   const openImg = new PopupWithImage(
@@ -155,14 +145,12 @@ function openPopupImg(name, link) {
   );
   openImg.open(name, link);
 }
-
-//* Экземпляр класса Card
+//* Экземпляр класса Card // шаблон карточки
 function rednerCards(item) {
   const cardElem = new Card(item, config, openPopupImg);
   return cardElem.createCard();
 }
-
-// инстанс класса Section
+//* Экземпляр класса Section
 const sectionCardList = new Section(
   {
     item: listCard,
@@ -191,12 +179,12 @@ function renderNewCard() {
   sectionCardList2.addNewCard(rednerCards(newCreateCard));
 }
 
-//! ********  ЭКЗЕМПЛЯРЫ класса FormValidator   *****/
-
+//** Экземпляр FormValidator для Сard ** //
 const cardFormValid = new FormValidator(configValidation, formCreateElement);
 cardFormValid.enableValidation();
+
+//** Экземпляр FormValidator для Profile ** //
 const profileValid = new FormValidator(configValidation, formProfile);
 profileValid.enableValidation();
-//! ********  ЭКЗЕМПЛЯРЫ класса FormValidator   *****/
 
 sectionCardList.renderItems();

@@ -5,20 +5,23 @@
 //! Содержит публичный метод setUserInfo, который принимает новые данные пользователя и добавляет их на страницу.
 
 export class UserInfo {
-  constructor({ formInputName, formInputJob }) {
-    this.name = document.querySelector(formInputName);
-    this.job = document.querySelector(formInputJob);
+  constructor({ profileName, profileJob }) {
+    this.name = document.querySelector(profileName);
+    this.about = document.querySelector(profileJob);
   }
 
-  //* возвращает объект с данными пользователя. Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
+  //* возвращает объект с данными пользователя. метод подставит в форму при открытии.
   getUserInfo() {
-    const inf = {
-      name: this.name.value,
-      job: this.job.value,
+    let infoData = {
+      name: this.name.textContent,
+      about: this.about.textContent,
     };
-    // return console.log(inf);
+    return infoData;
   }
 
   //* принимает новые данные пользователя и добавляет их на страницу.
-  setUserInfo() {}
+  setUserInfo({ name, about }) {
+    this.name.textContent = name;
+    this.about.textContent = about;
+  }
 }

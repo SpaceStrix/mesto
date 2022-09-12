@@ -15,5 +15,6 @@ export class PopupWithImage extends Popup {
     this.popupFigureImg.alt = caption;
     this.popupFigureImg.src = src;
     super.open();
+    super.setEventListeners(); // Временно
   }
 }

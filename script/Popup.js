@@ -8,20 +8,19 @@
 //! - Содержит публичный метод `_setEventListeners`, который добавляет слушатель клика иконке закрытия попапа.
 
 export class Popup {
-  constructor(popup) {
-    this.popup = popup;
+  constructor(popupSelector) {
+    this.popupSelector = popupSelector;
     this._handleEscClose = this._handleEscClose.bind(this);
     this.document = document;
   }
 
   open() {
-    this.popup.classList.add("popup_opened");
+    this.popupSelector.classList.add("popup_opened");
     this.document.addEventListener("keydown", this._handleEscClose);
-    this.setEventListeners(); // удалить
   }
 
   close() {
-    this.popup.classList.remove("popup_opened");
+    this.popupSelector.classList.remove("popup_opened");
     this.document.removeEventListener("keydown", this._handleEscClose);
   }
 
@@ -30,11 +29,10 @@ export class Popup {
   }
 
   setEventListeners() {
-    this.popup.addEventListener("click", e => {
-      const target = e.target;
+    this.popupSelector.addEventListener("click", e => {
       if (
-        target.classList.contains("popup__close") ||
-        target.classList.contains("popup_opened")
+        e.target.classList.contains("popup__close") ||
+        e.target.classList.contains("popup_opened")
       )
         this.close();
     });

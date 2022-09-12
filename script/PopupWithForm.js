@@ -15,34 +15,42 @@ import { Popup } from "./Popup.js";
 import { configValidation } from "./index.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popup, formSubmit) {
-    super(popup);
-    this.form = this.popup.querySelector(configValidation.formSelector);
-    this.formSubmit = formSubmit;
+  constructor(popupSelector, handleFormSubmit) {
+    super(popupSelector);
+    this.handleFormSubmit = handleFormSubmit;
+    this.form = this.popupSelector.querySelector(configValidation.formSelector);
   }
 
   //* собирает данные всех полей формы.
   _getInputValues() {
-    const { elements } = this.form;
-    const { name, about } = elements;
-    const valuesInput = {
-      name: name.value,
-      job: about.value,
-    };
-    return valuesInput;
+    return [...this.form.querySelectorAll(".popup__input")].reduce(
+      (acc, input) => {
+        acc[input.name] = input.value;
+        return acc;
+      },
+      {}
+    );
+
+    // const valueInput = {};
+    // [...this.form.querySelectorAll(".popup__input")].forEach(input => {
+    //   valueInput[input.name] = input.value;
+    // });
+    // return valueInput;
   }
 
   setEventListeners() {
     super.setEventListeners();
-    this.popup.addEventListener("submit", this.formSubmit);
+
+    this.form.addEventListener("submit", e => {
+      e.preventDefault();
+      this.handleFormSubmit(this._getInputValues());
+
+      this.close();
+    });
   }
 
   close() {
     super.close();
     this.form.reset();
-  }
-
-  open() {
-    super.open();
   }
 }
