@@ -30,12 +30,6 @@ export class PopupWithForm extends Popup {
       },
       {}
     );
-
-    // const valueInput = {};
-    // [...this.form.querySelectorAll(".popup__input")].forEach(input => {
-    //   valueInput[input.name] = input.value;
-    // });
-    // return valueInput;
   }
 
   setEventListeners() {
