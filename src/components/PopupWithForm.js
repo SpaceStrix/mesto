@@ -11,8 +11,8 @@
 //! Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
 //! Для каждого попапа создавайте свой экземпляр класса PopupWithForm
 
-import { Popup } from "./Popup.js";
-import { configValidation } from "./index.js"; // Поправить
+import { Popup } from "../components/Popup.js";
+import { configValidation } from "../pages/index.js"; // Поправить
 
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {

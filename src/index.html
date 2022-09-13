@@ -6,7 +6,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="icon" type="image/x-icon" href="./images/favicon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./pages/index.css">
     <title>Mesto Russia - учебный проект</title>
 </head>
 
@@ -17,7 +16,8 @@
     <main class="content">
         <section class="profile">
             <div class="profile__person">
-                <img src="./images/Avatar.jpg" alt="Жак-Ив Кусто -Исследователь океана" class="profile__avatar">
+                <img src="<%=require('./images/Avatar.jpg')%>" alt=" Жак-Ив Кусто -Исследователь океана"
+                    class="profile__avatar">
                 <div class="profile__info">
                     <h1 class="profile__name">Жак-Ив Кусто</h1>
                     <button class="profile__edit" type="button" aria-label="Кнопка редактирования профиля"></button>
@@ -98,7 +98,7 @@
     <template class="template-element">
         <article class="element">
             <button class="element__delete" type="button" aria-label="Кнопка удаления карточки"></button>
-            <img src="./images/elem-1.jpg" alt="Большая голубая дыра" class="element__img">
+            <img src="<%=require('./images/elem-1.jpg')%>" alt="Большая голубая дыра" class="element__img">
             <div class="element__title-group">
                 <h2 class="element__title">Большая голубая дыра </h2>
                 <button class="element__like" type="button" aria-label="Кнопка лайка"></button>
@@ -106,8 +106,6 @@
         </article>
 
     </template>
-    <script src="./script/index.js" type="module"></script>
-    <!-- <script src="./script/validation.js" type="module"></script> -->
 </body>
 
 </html>
