@@ -25,12 +25,10 @@ export class Section {
     this.container = document.querySelector(containerElements);
   }
 
-  addListItem(card) {
-    this.container.append(card);
-  }
-
-  addNewCard(newCard) {
-    this.container.prepend(newCard);
+  addItem(card, position) {
+    position === "after"
+      ? this.container.append(card)
+      : this.container.prepend(card);
   }
 
   renderItems() {
