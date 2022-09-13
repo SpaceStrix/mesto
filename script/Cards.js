@@ -14,11 +14,11 @@
 //   }
 
 export class Card {
-  constructor(data, config, openPopupImg) {
+  constructor(data, config, handleOpenPopupImg) {
     this.name = data.name;
     this.link = data.link;
     this.config = config;
-    this.openPopupImg = openPopupImg;
+    this.handleOpenPopupImg = handleOpenPopupImg;
   }
 
   _getTemplate() {
@@ -52,8 +52,8 @@ export class Card {
     this.card.remove();
   }
 
-  _fullImg() {
-    this.openPopupImg(this.name, this.link);
+  _handleCardClick() {
+    this.handleOpenPopupImg(this.name, this.link);
   }
 
   _setEventListeners() {
@@ -68,7 +68,7 @@ export class Card {
         this._handleDeleteBtn();
       });
     this.img.addEventListener("click", () => {
-      this._fullImg();
+      this._handleCardClick();
     });
   }
 }

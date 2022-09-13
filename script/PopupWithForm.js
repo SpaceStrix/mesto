@@ -12,7 +12,7 @@
 //! Для каждого попапа создавайте свой экземпляр класса PopupWithForm
 
 import { Popup } from "./Popup.js";
-import { configValidation } from "./index.js";
+import { configValidation } from "./index.js"; // Поправить
 
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
@@ -30,12 +30,6 @@ export class PopupWithForm extends Popup {
       },
       {}
     );
-
-    // const valueInput = {};
-    // [...this.form.querySelectorAll(".popup__input")].forEach(input => {
-    //   valueInput[input.name] = input.value;
-    // });
-    // return valueInput;
   }
 
   setEventListeners() {

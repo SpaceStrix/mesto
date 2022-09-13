@@ -51,11 +51,10 @@ const listCard = [
   },
 ];
 
-const selectors = {
-  popupAddElement: ".popup_type_new-card",
-  popupEditProfile: ".popup_type_edit",
-  popupFigure: ".popup_type_image",
-};
+//POPUP
+const popupAddElement = ".popup_type_new-card";
+const popupEditProfile = ".popup_type_edit";
+const popupFigure = ".popup_type_image";
 
 const containerElements = ".elements";
 const profileName = ".profile__name";
@@ -75,9 +74,9 @@ const btnEditProfile = document.querySelector(".profile__edit");
 const btnAddElement = document.querySelector(".profile__add-item");
 
 //POPUP
-const popupAddElement = document.querySelector(".popup_type_new-card");
-const popupEditProfile = document.querySelector(".popup_type_edit");
-const popupFigure = document.querySelector(".popup_type_image");
+// const popupAddElement = document.querySelector(".popup_type_new-card");
+// const popupEditProfile = document.querySelector(".popup_type_edit");
+// const popupFigure = document.querySelector(".popup_type_image");
 
 // ** Экземпляр PopupWithForm Card** //
 const popupWithFormCard = new PopupWithForm(
@@ -137,7 +136,7 @@ btnEditProfile.addEventListener("click", function () {
 //! ------------------------ popupWithFormProfile  PopupWithForm
 //! ------------------------ popupWithFormProfile  PopupWithForm
 
-function openPopupImg(name, link) {
+function handleOpenPopupImg(name, link) {
   const openImg = new PopupWithImage(
     popupFigure,
     popupFigureCaption,
@@ -147,7 +146,7 @@ function openPopupImg(name, link) {
 }
 //* Экземпляр класса Card // шаблон карточки
 function rednerCards(item) {
-  const cardElem = new Card(item, config, openPopupImg);
+  const cardElem = new Card(item, config, handleOpenPopupImg);
   return cardElem.createCard();
 }
 //* Экземпляр класса Section
