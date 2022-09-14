@@ -32,7 +32,7 @@ const userInfo = new UserInfo({ profileName, profileJob });
 
 //*  Экземпляр PopupWithForm Card ** //
 const popupWithFormCard = new PopupWithForm(popupAddElement, card => {
-  sectionCardList.addItem(rednerCards(card));
+  sectionCardList.addItem(createCard(card));
   popupWithFormCard.close();
 });
 popupWithFormCard.setEventListeners();
@@ -46,7 +46,7 @@ popupWithFormProfile.setEventListeners();
 //! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
 btnAddElement.addEventListener("click", () => {
   popupWithFormCard.open();
-  cardFormValid.clearForm();
+  cardFormValid.resetValidation();
 });
 
 //! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
@@ -56,7 +56,7 @@ btnEditProfile.addEventListener("click", () => {
   formInputJob.value = user.about;
 
   popupWithFormProfile.open();
-  profileValid.clearForm();
+  profileValid.resetValidation();
 });
 
 //* Экземпляр класса PopupWithImage ** //
@@ -72,7 +72,7 @@ function handleOpenPopupImg(name, link) {
 }
 
 //* Экземпляр класса Card // готовая разметка карточки
-function rednerCards(item) {
+function createCard(item) {
   const cardElem = new Card(item, config, handleOpenPopupImg);
   return cardElem.createCard();
 }
@@ -81,7 +81,7 @@ const sectionCardList = new Section(
   {
     item: listCard,
     renderer: item => {
-      sectionCardList.addItem(rednerCards(item), "after");
+      sectionCardList.addItem(createCard(item), "after");
     },
   },
   containerElements

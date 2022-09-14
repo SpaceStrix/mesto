@@ -1,35 +1,20 @@
-//* принимает в конструктор объект настроек с селекторами и классами формы;
-//* принимает вторым параметром элемент той формы, которая валидируется;
-//* имеет приватные методы, которые обрабатывают форму: проверяют валидность поля, изменяют состояние кнопки сабмита, устанавливают все обработчики;
-//* имеет публичный метод enableValidation, который включает валидацию формы.
-//* Для каждой проверяемой формы создайте экземпляр класса FormValidator.
-
-// !const configValidation = {
-//b     formSelector: '.popup__form',
-//b     inputSelector: '.popup__input',
-//b     submitButtonSelector: '.popup__btn-safe',
-//b     inactiveButtonClass: 'popup__btn-safe_disabled',
-//b     inputErrorClass: 'popup__input_type_error',
-//b     errorClass: 'popup__input-error_active'
-// }
-
 export class FormValidator {
   constructor(configForm, form) {
-    this.configForm = configForm;
-    this.form = form;
+    this._configForm = configForm;
+    this._form = form;
   }
 
   _showInputError(input, errorMessage) {
-    const formInputError = this.form.querySelector(`.${input.id}-error`);
-    input.classList.add(this.configForm.inputErrorClass);
-    formInputError.classList.add(this.configForm.errorClass);
+    const formInputError = this._form.querySelector(`.${input.id}-error`);
+    input.classList.add(this._configForm.inputErrorClass);
+    formInputError.classList.add(this._configForm.errorClass);
     formInputError.textContent = errorMessage;
   }
 
   _hideInputError(input) {
-    const formInputError = this.form.querySelector(`.${input.id}-error`);
-    input.classList.remove(this.configForm.inputErrorClass);
-    formInputError.classList.remove(this.configForm.errorClass);
+    const formInputError = this._form.querySelector(`.${input.id}-error`);
+    input.classList.remove(this._configForm.inputErrorClass);
+    formInputError.classList.remove(this._configForm.errorClass);
     formInputError.textContent = "";
   }
 
@@ -54,27 +39,28 @@ export class FormValidator {
   }
 
   _disableBtn() {
-    this.btnForm.classList.add(this.configForm.inactiveButtonClass);
+    this.btnForm.classList.add(this._configForm.inactiveButtonClass);
     this.btnForm.setAttribute("disabled", true);
   }
   _enableBtn() {
-    this.btnForm.classList.remove(this.configForm.inactiveButtonClass);
+    this.btnForm.classList.remove(this._configForm.inactiveButtonClass);
     this.btnForm.removeAttribute("disabled", false);
   }
 
-  clearForm() {
+  resetValidation() {
+    this._disableBtn();
+
     this.inputList.forEach(input => {
       this._hideInputError(input);
-      this._disableBtn();
     });
   }
 
   _setEventListeners() {
     this.inputList = [
-      ...this.form.querySelectorAll(this.configForm.inputSelector),
+      ...this._form.querySelectorAll(this._configForm.inputSelector),
     ];
-    this.btnForm = this.form.querySelector(
-      this.configForm.submitButtonSelector
+    this.btnForm = this._form.querySelector(
+      this._configForm.submitButtonSelector
     );
 
     this.inputList.forEach(input => {
@@ -84,7 +70,7 @@ export class FormValidator {
       });
     });
 
-    this.form.addEventListener("submit", e => {
+    this._form.addEventListener("submit", e => {
       e.preventDefault();
     });
   }

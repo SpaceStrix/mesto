@@ -1,30 +1,15 @@
-//*принимает в конструктор её данные и селектор её template-элемента;
-//*содержит приватные методы, которые работают с разметкой, устанавливают слушателей событий;
-//*содержит приватные методы для каждого обработчика;
-//*содержит один публичный метод, который возвращает полностью работоспособный и наполненный данными элемент карточки.
-
-//!const config = {
-//b    templateElement: '.template-element',
-//b    card: '.elements',
-//b    cardImage: '.element__img',
-//b    cardTitle: '.element__title',
-//b    btnDeleteCard: '.element__delete',
-//b    btnLikeCard: '.element__like',
-//b    btnCardLikeActive: 'element__like_active',
-//   }
-
 export class Card {
   constructor(data, config, handleOpenPopupImg) {
-    this.name = data.name;
-    this.link = data.link;
-    this.config = config;
-    this.handleOpenPopupImg = handleOpenPopupImg;
+    this._name = data.name;
+    this._link = data.link;
+    this._config = config;
+    this._handleOpenPopupImg = handleOpenPopupImg;
   }
 
   _getTemplate() {
     const cardTemplate = document
-      .querySelector(this.config.templateElement)
-      .content.querySelector(this.config.card)
+      .querySelector(this._config.templateElement)
+      .content.querySelector(this._config.card)
       .cloneNode(true);
     return cardTemplate;
   }
@@ -32,20 +17,19 @@ export class Card {
   createCard() {
     this.card = this._getTemplate();
 
-    this.img = this.card.querySelector(this.config.cardImage);
+    this.img = this.card.querySelector(this._config.cardImage);
 
-    this.img.src = this.link;
-    this.img.alt = this.name;
-    this.card.querySelector(this.config.cardTitle).textContent = this.name;
+    this.img.src = this._link;
+    this.img.alt = this._name;
+    this.card.querySelector(this._config.cardTitle).textContent = this._name;
+    this._likeButton = this.card.querySelector(this._config.btnLikeCard);
 
     this._setEventListeners();
     return this.card;
   }
 
   _handleLikeBtn() {
-    this.card
-      .querySelector(this.config.btnLikeCard)
-      .classList.toggle(this.config.btnCardLikeActive);
+    this._likeButton.classList.toggle(this._config.btnCardLikeActive);
   }
 
   _handleDeleteBtn() {
@@ -53,17 +37,15 @@ export class Card {
   }
 
   _handleCardClick() {
-    this.handleOpenPopupImg(this.name, this.link);
+    this._handleOpenPopupImg(this._name, this._link);
   }
 
   _setEventListeners() {
+    this._likeButton.addEventListener("click", () => {
+      this._handleLikeBtn();
+    });
     this.card
-      .querySelector(this.config.btnLikeCard)
-      .addEventListener("click", () => {
-        this._handleLikeBtn();
-      });
-    this.card
-      .querySelector(this.config.btnDeleteCard)
+      .querySelector(this._config.btnDeleteCard)
       .addEventListener("click", () => {
         this._handleDeleteBtn();
       });

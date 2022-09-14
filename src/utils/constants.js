@@ -54,6 +54,7 @@ export const profileJob = ".profile__job";
 export const popupFigureImg = ".img-container__img";
 export const popupFigureCaption = ".img-container__title";
 
+//*
 export const formProfile = document.forms["popup__form-profile"];
 export const formInputName = formProfile.elements["name"];
 export const formInputJob = formProfile.elements["about"];
