@@ -12,7 +12,7 @@
 //! Для каждого попапа создавайте свой экземпляр класса PopupWithForm
 
 import { Popup } from "../components/Popup.js";
-import { configValidation } from "../pages/index.js"; // Поправить
+import { configValidation } from "../utils/constants.js"; // Поправить
 
 export class PopupWithForm extends Popup {
   constructor(popupSelector, handleFormSubmit) {
