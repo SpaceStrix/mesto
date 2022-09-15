@@ -1,14 +1,13 @@
 import { Popup } from "../components/Popup.js";
 
 export class PopupWithForm extends Popup {
-  constructor(popupSelector, handleFormSubmit) {
-    super(popupSelector);
+  constructor(popup, handleFormSubmit) {
+    super(popup);
     this.handleFormSubmit = handleFormSubmit;
-    this._form = this._popupSelector.querySelector(".popup__form");
+    this._form = this._popup.querySelector(".popup__form");
     this._inputList = this._form.querySelectorAll(".popup__input");
   }
 
-  //* собирает данные всех полей формы.
   _getInputValues() {
     return [...this._inputList].reduce((acc, input) => {
       acc[input.name] = input.value;
@@ -24,6 +23,12 @@ export class PopupWithForm extends Popup {
       this.handleFormSubmit(this._getInputValues());
 
       this.close();
+    });
+  }
+
+  setInputValues(data) {
+    this._inputList.forEach(input => {
+      input.value = data[input.name];
     });
   }
 

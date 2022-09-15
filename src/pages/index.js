@@ -10,7 +10,7 @@ import { UserInfo } from "../components/UserInfo.js";
 import {
   listCard,
   configValidation,
-  config,
+  configCard,
   popupAddElement,
   popupEditProfile,
   popupFigure,
@@ -20,8 +20,6 @@ import {
   popupFigureImg,
   popupFigureCaption,
   formProfile,
-  formInputName,
-  formInputJob,
   formCreateElement,
   btnEditProfile,
   btnAddElement,
@@ -51,10 +49,7 @@ btnAddElement.addEventListener("click", () => {
 
 //! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
 btnEditProfile.addEventListener("click", () => {
-  const user = userInfo.getUserInfo();
-  formInputName.value = user.name;
-  formInputJob.value = user.about;
-
+  popupWithFormProfile.setInputValues(userInfo.getUserInfo());
   popupWithFormProfile.open();
   profileValid.resetValidation();
 });
@@ -73,7 +68,7 @@ function handleOpenPopupImg(name, link) {
 
 //* Экземпляр класса Card // готовая разметка карточки
 function createCard(item) {
-  const cardElem = new Card(item, config, handleOpenPopupImg);
+  const cardElem = new Card(item, configCard, handleOpenPopupImg);
   return cardElem.createCard();
 }
 //* Экземпляр класса Section

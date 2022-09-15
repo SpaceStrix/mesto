@@ -35,7 +35,7 @@ export const configValidation = {
   errorClass: "popup__input-error_active",
 };
 //* Config for CARD
-export const config = {
+export const configCard = {
   templateElement: ".template-element",
   card: ".element",
   cardImage: ".element__img",
@@ -56,8 +56,6 @@ export const popupFigureCaption = ".img-container__title";
 
 //*
 export const formProfile = document.forms["popup__form-profile"];
-export const formInputName = formProfile.elements["name"];
-export const formInputJob = formProfile.elements["about"];
 export const formCreateElement = document.forms["popup__form-element"];
 export const btnEditProfile = document.querySelector(".profile__edit");
 export const btnAddElement = document.querySelector(".profile__add-item");

@@ -1,11 +1,5 @@
 export class Section {
-  constructor(
-    {
-      item, // массив карточек
-      renderer, // функция отвечает за создание и отрисовку данных на странице.
-    },
-    containerElements
-  ) {
+  constructor({ item, renderer }, containerElements) {
     this._item = item;
     this._renderer = renderer;
     this._container = document.querySelector(containerElements);
@@ -15,6 +9,10 @@ export class Section {
     position === "after"
       ? this._container.append(card)
       : this._container.prepend(card);
+  }
+
+  renderCard(item) {
+    this._renderer(item);
   }
 
   renderItems() {
