@@ -44,14 +44,16 @@ popupWithFormProfile.setEventListeners();
 //! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
 btnAddElement.addEventListener("click", () => {
   popupWithFormCard.open();
-  cardFormValid.resetValidation();
+
+  formValidators[formCreateElement].resetValidation();
 });
 
 //! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
 btnEditProfile.addEventListener("click", () => {
   popupWithFormProfile.setInputValues(userInfo.getUserInfo());
   popupWithFormProfile.open();
-  profileValid.resetValidation();
+
+  formValidators[formProfile].resetValidation();
 });
 
 //* Экземпляр класса PopupWithImage ** //
@@ -82,12 +84,19 @@ const sectionCardList = new Section(
   containerElements
 );
 
-//** Экземпляр FormValidator для Сard ** //
-const cardFormValid = new FormValidator(configValidation, formCreateElement);
-cardFormValid.enableValidation();
+// Валидация форм
+const formValidators = {};
+const enableValidation = configValidation => {
+  const formList = Array.from(
+    document.querySelectorAll(configValidation.formSelector)
+  );
+  formList.forEach(formElement => {
+    const validator = new FormValidator(configValidation, formElement);
+    const formName = formElement.getAttribute("name");
+    formValidators[formName] = validator;
+    validator.enableValidation();
+  });
+};
 
-//** Экземпляр FormValidator для Profile ** //
-const profileValid = new FormValidator(configValidation, formProfile);
-profileValid.enableValidation();
-
+enableValidation(configValidation);
 sectionCardList.renderItems();

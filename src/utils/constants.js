@@ -53,9 +53,8 @@ export const profileName = ".profile__name";
 export const profileJob = ".profile__job";
 export const popupFigureImg = ".img-container__img";
 export const popupFigureCaption = ".img-container__title";
+export const formProfile = "popup__form-profile";
+export const formCreateElement = "popup__form-element";
 
-//*
-export const formProfile = document.forms["popup__form-profile"];
-export const formCreateElement = document.forms["popup__form-element"];
 export const btnEditProfile = document.querySelector(".profile__edit");
 export const btnAddElement = document.querySelector(".profile__add-item");
