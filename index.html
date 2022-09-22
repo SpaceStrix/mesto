@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" type="image/x-icon" href="./images/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto Russia - учебный проект</title>
+<script defer src="main.js"></script><link href="main.css" rel="stylesheet"></head>
+
+<body class="body">
+    <header class="header">
+        <a href="#" class="header__logo" target="_blank"></a>
+    </header>
+    <main class="content">
+        <section class="profile">
+            <div class="profile__person">
+                <img src="c55f7e89b8fb85ee1d5c.jpg" alt=" Жак-Ив Кусто -Исследователь океана"
+                    class="profile__avatar">
+                <div class="profile__info">
+                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <button class="profile__edit" type="button" aria-label="Кнопка редактирования профиля"></button>
+                    <p class="profile__job">Исследователь океана</p>
+                </div>
+            </div>
+            <button class="profile__add-item" type="button" aria-label="Кнопка добавление карточки"></button>
+        </section>
+        <!-- profile -->
+        <section class="elements">
+        </section>
+        <!-- /.elements -->
+    </main>
+    <footer class="footer">
+        <p class="footer__text">© 2022 Mesto Russia</p>
+    </footer>
+
+    <div class="popup popup_type_edit">
+        <div class="popup__container">
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
+            <form class="popup__form" name="popup__form-profile" novalidate>
+                <fieldset class="popup__input-container">
+                    <legend class="popup__title">Редактировать профиль</legend>
+
+                    <label class="popup__label">
+                        <input type="text" name="name" id="popup__name-input" class="popup__input" placeholder="Имя"
+                            minlength="2" maxlength="40" required>
+                        <span class="popup__name-input-error popup__input-error"></span>
+                    </label>
+
+                    <label class="popup__label">
+                        <input type="text" name="about" id="popup__about-input" class="popup__input"
+                            placeholder="О себе" minlength="2" maxlength="200" required>
+                        <span class="popup__about-input-error popup__input-error"></span>
+                    </label>
+                </fieldset>
+                <button type="submit" class="popup__btn-safe">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_new-card">
+        <div class="popup__container">
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
+
+            <form class="popup__form" name="popup__form-element" novalidate>
+                <fieldset class="popup__input-container">
+                    <legend class="popup__title">Новое место</legend>
+
+                    <label class="popup__label">
+                        <input type="text" name="name" id="popup__title-input" class="popup__input"
+                            placeholder="Название" minlength="2" maxlength="40" required>
+                        <span class="popup__title-input-error popup__input-error"></span>
+                    </label>
+
+                    <label class="popup__label">
+                        <input type="url" name="link" id="popup__url-input" class="popup__input"
+                            placeholder="Укажите ссылку" minlength="2" maxlength="200" required>
+                        <span class="popup__url-input-error popup__input-error"></span>
+                    </label>
+
+                </fieldset>
+                <button type="submit" class="popup__btn-safe">Создать</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="popup popup_type_image">
+        <div class="img-container">
+            <figure class="img-container__block">
+                <img src="./" alt="" class="img-container__img">
+                <figcaption class="img-container__title">Новое место</figcaption>
+            </figure>
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
+        </div>
+    </div>
+
+    <template class="template-element">
+        <article class="element">
+            <button class="element__delete" type="button" aria-label="Кнопка удаления карточки"></button>
+            <img src="07cf7cfebc3773cd5d0d.jpg" alt="Большая голубая дыра" class="element__img">
+            <div class="element__title-group">
+                <h2 class="element__title">Большая голубая дыра </h2>
+                <button class="element__like" type="button" aria-label="Кнопка лайка"></button>
+            </div>
+        </article>
+
+    </template>
+</body>
+
+</html>
