@@ -95,13 +95,26 @@
         </div>
     </div>
 
+    <div class="popup popup_type_confirm">
+        <div class="popup__container">
+            <h4 class="popup__title">Вы уверены ?</h4>
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
+            <form class="popup__form" name="popup__form-confirm" novalidate>
+                <button type="submit" class="popup__delete-card">Да</button>
+            </form>
+        </div>
+    </div>
+
     <template class="template-element">
         <article class="element">
             <button class="element__delete" type="button" aria-label="Кнопка удаления карточки"></button>
             <img src="07cf7cfebc3773cd5d0d.jpg" alt="Большая голубая дыра" class="element__img">
             <div class="element__title-group">
                 <h2 class="element__title">Большая голубая дыра </h2>
-                <button class="element__like" type="button" aria-label="Кнопка лайка"></button>
+                <div class="element__group">
+                    <button class="element__like" type="button" aria-label="Кнопка лайка"></button>
+                    <p class="element__like-counter">1</p>
+                </div>
             </div>
         </article>
 
