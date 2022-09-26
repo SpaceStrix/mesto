@@ -16,12 +16,13 @@
     <main class="content">
         <section class="profile">
             <div class="profile__person">
-                <img src="<%=require('./images/Avatar.jpg')%>" alt=" Жак-Ив Кусто -Исследователь океана"
-                    class="profile__avatar">
+                <button class="profile__avatar">
+                    <img src="" alt="" class="profile__avatar-img">
+                </button>
                 <div class="profile__info">
-                    <h1 class="profile__name">Жак-Ив Кусто</h1>
+                    <h1 class="profile__name"></h1>
                     <button class="profile__edit" type="button" aria-label="Кнопка редактирования профиля"></button>
-                    <p class="profile__job">Исследователь океана</p>
+                    <p class="profile__job"></p>
                 </div>
             </div>
             <button class="profile__add-item" type="button" aria-label="Кнопка добавление карточки"></button>
@@ -84,6 +85,26 @@
             </form>
         </div>
     </div>
+
+    <div class="popup popup_type_avatar">
+        <div class="popup__container">
+            <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
+
+            <form class="popup__form" name="popup__form-avatar" novalidate>
+                <fieldset class="popup__input-container">
+                    <legend class="popup__title">Обновить аватар</legend>
+
+                    <label class="popup__label">
+                        <input type="url" name="avatar" id="popup__url-avatar" class="popup__input"
+                            placeholder="Укажите ссылку" minlength="2" maxlength="200" required>
+                        <span class="popup__url-avatar-error popup__input-error"></span>
+                    </label>
+                </fieldset>
+                <button type="submit" class="popup__btn-safe">Создать</button>
+            </form>
+        </div>
+    </div>
+
 
     <div class="popup popup_type_image">
         <div class="img-container">

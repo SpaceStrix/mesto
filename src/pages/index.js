@@ -26,24 +26,39 @@ import {
   formCreateElement,
   btnEditProfile,
   btnAddElement,
+  btnEditAvatar,
+  formEditAvatar,
   deleteCard,
+  popupFormAvatar,
 } from "../utils/constants.js";
 
-//************ API ***********/
+//b ************ API ***********/
+
 const api = new Api(configApi);
 
+api
+  .setNewAvatar(
+    "https://www.matthewchilders.com/wp-content/uploads/2019/04/lovecraft-product-print.jpg"
+  )
+  .then(result => {
+    document.querySelector(profileAvatar).src = result.avatar;
+  });
+
+api.getUserInfoFromServer().then(dataUser => {
+  userInfo.setUserInfo(dataUser);
+});
 api.getAllCard().then(dataListCard => {
   sectionCardList.renderItems(dataListCard);
 });
 
-//*********** API **********/
+//  Экземпляр UserInfo
+const userInfo = new UserInfo({
+  profileName,
+  profileJob,
+});
 
-//* Экземпляр UserInfo ** //
-const userInfo = new UserInfo({ profileName, profileJob, profileAvatar });
-
-//*  Экземпляр PopupWithForm Card ** //
+// Экземпляр PopupWithForm Card
 const popupWithFormCard = new PopupWithForm(popupAddElement, card => {
-  //
   api.addNewCardToServer(card).then(dataFromServer => {
     sectionCardList.addItem(createCard(dataFromServer));
   });
@@ -51,29 +66,21 @@ const popupWithFormCard = new PopupWithForm(popupAddElement, card => {
 });
 popupWithFormCard.setEventListeners();
 
-//* Экземпляр PopupWithForm for Profile ** //
+// Экземпляр PopupWithForm Avatar
+const popupWithAvatar = new PopupWithForm(popupFormAvatar, avatar => {
+  console.log(avatar);
+});
+popupWithAvatar.setEventListeners();
+
+// Экземпляр PopupWithForm for Profile
 const popupWithFormProfile = new PopupWithForm(popupEditProfile, dataUser => {
-  userInfo.setUserInfo(dataUser);
+  api.editingProfile(dataUser).then(dataFromServer => {
+    userInfo.setUserInfo(dataFromServer);
+  });
 });
 popupWithFormProfile.setEventListeners();
 
-//! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
-btnAddElement.addEventListener("click", () => {
-  popupWithFormCard.open();
-
-  formValidators[formCreateElement].resetValidation();
-});
-
-//! -- КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
-btnEditProfile.addEventListener("click", () => {
-  popupWithFormProfile.setInputValues(userInfo.getUserInfo());
-
-  popupWithFormProfile.open();
-
-  formValidators[formProfile].resetValidation();
-});
-
-//* Экземпляр класса PopupWithImage ** //
+// Экземпляр класса PopupWithImage
 const popupWithImage = new PopupWithImage(
   popupFigure,
   popupFigureCaption,
@@ -81,30 +88,29 @@ const popupWithImage = new PopupWithImage(
 );
 popupWithImage.setEventListeners();
 
-function handleOpenPopupImg(name, link) {
-  popupWithImage.open(name, link);
-}
-
-const deleteCrad = new DeleteCard(deleteCard);
-deleteCrad.setEventListeners();
-
-function handleDeleteCard() {
-  deleteCrad.open();
-}
-
-//* Экземпляр класса Card // готовая разметка карточки
+// Экземпляр класса Card
 function createCard(item) {
   const cardElem = new Card(
     item,
     configCard,
     handleOpenPopupImg,
-    handleDeleteCard
+    handleClickDeleteCard
   );
 
   return cardElem.createCard();
 }
+// КоллБэки класса Кард
+function handleOpenPopupImg(name, link) {
+  popupWithImage.open(name, link);
+}
 
-//* Экземпляр класса Section
+function handleClickDeleteCard(dataToDelete) {
+  api.removeCard(dataToDelete.getIdCard()).then(() => {
+    return dataToDelete.removeCard();
+  });
+}
+
+// Экземпляр класса Section
 const sectionCardList = new Section(item => {
   sectionCardList.addItem(createCard(item), "after");
 }, containerElements);
@@ -122,5 +128,22 @@ const enableValidation = configValidation => {
     validator.enableValidation();
   });
 };
+
+// КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
+btnAddElement.addEventListener("click", () => {
+  popupWithFormCard.open();
+  formValidators[formCreateElement].resetValidation();
+});
+// КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
+btnEditProfile.addEventListener("click", () => {
+  popupWithFormProfile.setInputValues(userInfo.getUserInfo());
+  popupWithFormProfile.open();
+  formValidators[formProfile].resetValidation();
+});
+
+btnEditAvatar.addEventListener("click", () => {
+  popupWithAvatar.open();
+  formValidators[formEditAvatar].resetValidation();
+});
 
 enableValidation(configValidation);

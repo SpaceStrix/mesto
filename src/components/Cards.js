@@ -1,11 +1,13 @@
 export class Card {
-  constructor(data, config, handleOpenPopupImg, handleDeleteCard) {
+  constructor(data, config, handleOpenPopupImg, handleClickDelete) {
     this._data = data;
     this._name = data.name;
     this._link = data.link;
+    this._idOwner = data.idOwner;
+
     this._config = config;
     this._handleOpenPopupImg = handleOpenPopupImg;
-    this._handleDeleteBtn = handleDeleteCard;
+    this._handleClickDelete = handleClickDelete;
   }
 
   _getTemplate() {
@@ -32,6 +34,10 @@ export class Card {
     this._likeButton = this.card.querySelector(this._config.btnLikeCard);
     this._deleteCard = this.card.querySelector(this._config.btnDeleteCard);
 
+    if (this._data.owner._id != "f80f9d3c7d7644e8bac682ce") {
+      this._deleteCard.remove();
+    }
+
     this._setEventListeners();
     return this.card;
   }
@@ -40,8 +46,9 @@ export class Card {
     this._likeButton.classList.toggle(this._config.btnCardLikeActive);
   }
 
-  _handleDeleteBtn() {
+  removeCard() {
     this.card.remove();
+    this.card = null;
   }
 
   _handleCardClick() {
@@ -53,10 +60,16 @@ export class Card {
       this._handleLikeBtn();
     });
     this._deleteCard.addEventListener("click", () => {
-      this._handleDeleteBtn();
+      this._handleClickDelete(this);
     });
     this.img.addEventListener("click", () => {
       this._handleCardClick();
     });
+  }
+
+  _checkUserPost() {}
+
+  getIdCard() {
+    return this._data._id;
   }
 }

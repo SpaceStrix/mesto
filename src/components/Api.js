@@ -4,7 +4,7 @@ export class Api {
     this._headers = config.headers;
   }
 
-  //* массив карточек
+  //b массив карточек
   getAllCard() {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
@@ -14,9 +14,8 @@ export class Api {
       }
     });
   }
-
+  //b добавление новой карточки
   addNewCardToServer({ name, link }) {
-    console.log(name);
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers,
@@ -30,9 +29,19 @@ export class Api {
       }
     });
   }
-
-  //* информация о пользователе
-  getUserInfo() {
+  //b удаление карточки
+  removeCard(idCard) {
+    return fetch(`${this._url}/cards/${idCard}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then(response => {
+      if (response.ok) {
+        response.json();
+      }
+    });
+  }
+  //b информация о пользователе
+  getUserInfoFromServer() {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
     }).then(response => {
@@ -41,14 +50,26 @@ export class Api {
       }
     });
   }
-  //* редактирование профиля
-  editingProfile() {
+  //b редактирование профиля
+  editingProfile({ name, about }) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        name: "name",
-        about: "about",
+        name,
+        about,
+      }),
+    }).then(response => {
+      return response.json();
+    });
+  }
+
+  setNewAvatar(avatar) {
+    return fetch(`${this._url}/users/me/avatar`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        avatar,
       }),
     }).then(response => {
       return response.json();

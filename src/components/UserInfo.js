@@ -4,7 +4,7 @@ export class UserInfo {
     this._about = document.querySelector(profileJob);
   }
 
-  //* возвращает объект с данными пользователя. метод подставит в форму при открытии.
+  //b возвращает объект с данными пользователя. метод подставит в форму при открытии.
   getUserInfo() {
     const infoData = {
       name: this._name.textContent,
@@ -13,7 +13,7 @@ export class UserInfo {
     return infoData;
   }
 
-  //* принимает новые данные пользователя и добавляет их на страницу.
+  //b принимает новые данные пользователя и добавляет их на страницу.
   setUserInfo({ name, about }) {
     this._name.textContent = name;
     this._about.textContent = about;
