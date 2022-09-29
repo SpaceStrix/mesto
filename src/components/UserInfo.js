@@ -1,7 +1,8 @@
 export class UserInfo {
-  constructor({ profileName, profileJob }) {
+  constructor({ profileName, profileJob, profileAvatar }) {
     this._name = document.querySelector(profileName);
     this._about = document.querySelector(profileJob);
+    this._avatar = document.querySelector(profileAvatar);
   }
 
   //b возвращает объект с данными пользователя. метод подставит в форму при открытии.
@@ -17,5 +18,10 @@ export class UserInfo {
   setUserInfo({ name, about }) {
     this._name.textContent = name;
     this._about.textContent = about;
+  }
+
+  setAvatar(avatar) {
+    this._avatar.src = avatar;
+    console.log(this._avatar);
   }
 }

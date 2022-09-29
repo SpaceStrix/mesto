@@ -64,12 +64,12 @@ export class Api {
     });
   }
 
-  setNewAvatar(avatar) {
+  setNewAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
       body: JSON.stringify({
-        avatar,
+        avatar: data.avatar,
       }),
     }).then(response => {
       return response.json();

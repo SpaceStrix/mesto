@@ -36,14 +36,6 @@ import {
 
 const api = new Api(configApi);
 
-api
-  .setNewAvatar(
-    "https://www.matthewchilders.com/wp-content/uploads/2019/04/lovecraft-product-print.jpg"
-  )
-  .then(result => {
-    document.querySelector(profileAvatar).src = result.avatar;
-  });
-
 api.getUserInfoFromServer().then(dataUser => {
   userInfo.setUserInfo(dataUser);
 });
@@ -55,32 +47,56 @@ api.getAllCard().then(dataListCard => {
 const userInfo = new UserInfo({
   profileName,
   profileJob,
+  profileAvatar,
 });
 
-// Экземпляр PopupWithForm Card
+//b Экземпляр PopupWithForm Card
 const popupWithFormCard = new PopupWithForm(popupAddElement, card => {
-  api.addNewCardToServer(card).then(dataFromServer => {
-    sectionCardList.addItem(createCard(dataFromServer));
-  });
+  popupWithFormCard.loadProcess(true);
+  api
+    .addNewCardToServer(card)
+    .then(dataFromServer => {
+      sectionCardList.addItem(createCard(dataFromServer));
+    })
+    .finally(() => {
+      popupWithFormCard.loadProcess(false);
+    });
   popupWithFormCard.close();
 });
 popupWithFormCard.setEventListeners();
 
-// Экземпляр PopupWithForm Avatar
-const popupWithAvatar = new PopupWithForm(popupFormAvatar, avatar => {
-  console.log(avatar);
+//b Экземпляр PopupWithForm Avatar
+const popupWithAvatar = new PopupWithForm(popupFormAvatar, data => {
+  popupWithAvatar.loadProcess(true);
+  api
+    .setNewAvatar(data)
+    .then(result => {
+      userInfo.setAvatar(result.avatar);
+      console.log(result);
+      popupWithAvatar.close();
+    })
+    .finally(() => {
+      popupWithAvatar.loadProcess(false);
+    });
 });
 popupWithAvatar.setEventListeners();
 
-// Экземпляр PopupWithForm for Profile
+//b Экземпляр PopupWithForm for Profile
 const popupWithFormProfile = new PopupWithForm(popupEditProfile, dataUser => {
-  api.editingProfile(dataUser).then(dataFromServer => {
-    userInfo.setUserInfo(dataFromServer);
-  });
+  popupWithFormProfile.loadProcess(true);
+  api
+    .editingProfile(dataUser)
+    .then(dataFromServer => {
+      userInfo.setUserInfo(dataFromServer);
+      popupWithFormProfile.close();
+    })
+    .finally(() => {
+      popupWithFormProfile.loadProcess(false);
+    });
 });
 popupWithFormProfile.setEventListeners();
 
-// Экземпляр класса PopupWithImage
+//b Экземпляр класса PopupWithImage
 const popupWithImage = new PopupWithImage(
   popupFigure,
   popupFigureCaption,
@@ -88,7 +104,7 @@ const popupWithImage = new PopupWithImage(
 );
 popupWithImage.setEventListeners();
 
-// Экземпляр класса Card
+//b Экземпляр класса Card
 function createCard(item) {
   const cardElem = new Card(
     item,
@@ -99,7 +115,7 @@ function createCard(item) {
 
   return cardElem.createCard();
 }
-// КоллБэки класса Кард
+//b КоллБэки класса Кард
 function handleOpenPopupImg(name, link) {
   popupWithImage.open(name, link);
 }
@@ -110,12 +126,12 @@ function handleClickDeleteCard(dataToDelete) {
   });
 }
 
-// Экземпляр класса Section
+//b Экземпляр класса Section
 const sectionCardList = new Section(item => {
   sectionCardList.addItem(createCard(item), "after");
 }, containerElements);
 
-// Валидация форм
+//b Валидация форм
 const formValidators = {};
 const enableValidation = configValidation => {
   const formList = Array.from(
@@ -129,7 +145,7 @@ const enableValidation = configValidation => {
   });
 };
 
-// КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
+//b КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
 btnAddElement.addEventListener("click", () => {
   popupWithFormCard.open();
   formValidators[formCreateElement].resetValidation();
