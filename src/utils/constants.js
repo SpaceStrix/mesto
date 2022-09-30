@@ -33,6 +33,7 @@ export const popupFigure = ".popup_type_image";
 export const popupFormAvatar = ".popup_type_avatar";
 
 export const containerElements = ".elements";
+
 export const profileName = ".profile__name";
 export const profileJob = ".profile__job";
 export const profileAvatar = ".profile__avatar-img";

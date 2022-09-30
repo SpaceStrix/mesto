@@ -1,13 +1,22 @@
 export class Card {
-  constructor(data, config, handleOpenPopupImg, handleClickDelete) {
+  constructor(
+    data,
+    config,
+    handleOpenPopupImg,
+    handleClickDelete,
+    userID,
+    handleLikeCard
+  ) {
     this._data = data;
     this._name = data.name;
     this._link = data.link;
-    this._idOwner = data.idOwner;
 
     this._config = config;
     this._handleOpenPopupImg = handleOpenPopupImg;
     this._handleClickDelete = handleClickDelete;
+    this._handleLikeCard = handleLikeCard;
+
+    this._userID = userID;
   }
 
   _getTemplate() {
@@ -23,10 +32,6 @@ export class Card {
 
     this.img = this.card.querySelector(this._config.cardImage);
 
-    //* counter
-    this._counter = this.card.querySelector(this._config.likeCounter);
-    this._counter.textContent = this._data.likes.length;
-
     this.img.src = this._link;
     this.img.alt = this._name;
     this.card.querySelector(this._config.cardTitle).textContent = this._name;
@@ -38,12 +43,10 @@ export class Card {
       this._deleteCard.remove();
     }
 
+    this._updataLike();
+
     this._setEventListeners();
     return this.card;
-  }
-
-  _handleLikeBtn() {
-    this._likeButton.classList.toggle(this._config.btnCardLikeActive);
   }
 
   removeCard() {
@@ -57,7 +60,7 @@ export class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
-      this._handleLikeBtn();
+      this._handleLikeCard(this);
     });
     this._deleteCard.addEventListener("click", () => {
       this._handleClickDelete(this);
@@ -67,9 +70,37 @@ export class Card {
     });
   }
 
-  _checkUserPost() {}
-
   getIdCard() {
     return this._data._id;
+  }
+
+  liked() {
+    return this._data.likes.some(likedList => {
+      return likedList._id == this._userID;
+    });
+  }
+
+  _updataLike() {
+    this._counter = this.card.querySelector(this._config.likeCounter);
+    this._counter.textContent = this._data.likes.length;
+
+    const liked = this._data.likes.some(likedList => {
+      return likedList._id == this._userID;
+    });
+
+    // if (liked) {
+    //   this._likeButton.classList.add(this._config.btnCardLikeActive);
+    // } else {
+    //   this._likeButton.classList.remove(this._config.btnCardLikeActive);
+    // }
+
+    this.liked()
+      ? this._likeButton.classList.add(this._config.btnCardLikeActive)
+      : this._likeButton.classList.remove(this._config.btnCardLikeActive);
+  }
+
+  setLike(data) {
+    this._data.likes = data.likes;
+    this._updataLike();
   }
 }

@@ -33,11 +33,13 @@ import {
 } from "../utils/constants.js";
 
 //b ************ API ***********/
-
+let userID = null;
 const api = new Api(configApi);
 
 api.getUserInfoFromServer().then(dataUser => {
+  userID = dataUser._id;
   userInfo.setUserInfo(dataUser);
+  userInfo.setAvatar(dataUser.avatar);
 });
 api.getAllCard().then(dataListCard => {
   sectionCardList.renderItems(dataListCard);
@@ -51,10 +53,10 @@ const userInfo = new UserInfo({
 });
 
 //b Экземпляр PopupWithForm Card
-const popupWithFormCard = new PopupWithForm(popupAddElement, card => {
+const popupWithFormCard = new PopupWithForm(popupAddElement, dataCard => {
   popupWithFormCard.loadProcess(true);
   api
-    .addNewCardToServer(card)
+    .addNewCardToServer(dataCard)
     .then(dataFromServer => {
       sectionCardList.addItem(createCard(dataFromServer));
     })
@@ -66,13 +68,12 @@ const popupWithFormCard = new PopupWithForm(popupAddElement, card => {
 popupWithFormCard.setEventListeners();
 
 //b Экземпляр PopupWithForm Avatar
-const popupWithAvatar = new PopupWithForm(popupFormAvatar, data => {
+const popupWithAvatar = new PopupWithForm(popupFormAvatar, dataAvatar => {
   popupWithAvatar.loadProcess(true);
   api
-    .setNewAvatar(data)
+    .setNewAvatar(dataAvatar)
     .then(result => {
       userInfo.setAvatar(result.avatar);
-      console.log(result);
       popupWithAvatar.close();
     })
     .finally(() => {
@@ -104,13 +105,21 @@ const popupWithImage = new PopupWithImage(
 );
 popupWithImage.setEventListeners();
 
+function handleLikeCard(data) {
+  api
+    .toggleLike(data.getIdCard(), data.liked())
+    .then(dataCard => data.setLike(dataCard));
+}
+
 //b Экземпляр класса Card
 function createCard(item) {
   const cardElem = new Card(
     item,
     configCard,
     handleOpenPopupImg,
-    handleClickDeleteCard
+    handleClickDeleteCard,
+    userID,
+    handleLikeCard
   );
 
   return cardElem.createCard();
@@ -145,18 +154,18 @@ const enableValidation = configValidation => {
   });
 };
 
-//b КЛИК ПО КНОПКЕ ОТКРЫТИЯ КАРТОЧКИ
+//b Кнопка создания карточки
 btnAddElement.addEventListener("click", () => {
   popupWithFormCard.open();
   formValidators[formCreateElement].resetValidation();
 });
-// КЛИК ПО КНОПКЕ ОТКРЫТИЯ ПРОФИЛЯ
+//b Кнопка редактирования профиля
 btnEditProfile.addEventListener("click", () => {
   popupWithFormProfile.setInputValues(userInfo.getUserInfo());
   popupWithFormProfile.open();
   formValidators[formProfile].resetValidation();
 });
-
+//b Кнопка редактирования аватарки
 btnEditAvatar.addEventListener("click", () => {
   popupWithAvatar.open();
   formValidators[formEditAvatar].resetValidation();

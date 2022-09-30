@@ -75,4 +75,13 @@ export class Api {
       return response.json();
     });
   }
+
+  toggleLike(idCard, liked) {
+    return fetch(`${this._url}/cards/${idCard}/likes `, {
+      method: liked ? "DELETE" : "PUT",
+      headers: this._headers,
+    }).then(response => {
+      return response.json();
+    });
+  }
 }
