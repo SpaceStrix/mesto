@@ -63,8 +63,8 @@ const popupWithFormCard = new PopupWithForm(popupAddElement, dataCard => {
     })
     .finally(() => {
       popupWithFormCard.loadProcess(false);
+      popupWithFormCard.close();
     });
-  popupWithFormCard.close();
 });
 popupWithFormCard.setEventListeners();
 
@@ -90,10 +90,10 @@ const popupWithFormProfile = new PopupWithForm(popupEditProfile, dataUser => {
     .editingProfile(dataUser)
     .then(dataFromServer => {
       userInfo.setUserInfo(dataFromServer);
-      popupWithFormProfile.close();
     })
     .finally(() => {
       popupWithFormProfile.loadProcess(false);
+      popupWithFormProfile.close();
     });
 });
 popupWithFormProfile.setEventListeners();
@@ -118,10 +118,16 @@ function handleLikeCard(data) {
 function handleClickDeleteCard(dataToDelete) {
   deleCard.open();
   deleCard.handleDeleteCard(() => {
-    api.removeCard(dataToDelete.getIdCard()).then(() => {
-      dataToDelete.removeCard();
-      deleCard.close();
-    });
+    api
+      .removeCard(dataToDelete.getIdCard())
+      .then(() => {
+        deleCard.loadProcess(true);
+        dataToDelete.removeCard();
+      })
+      .finally(() => {
+        deleCard.loadProcess(false);
+        deleCard.close();
+      });
   });
 }
 
