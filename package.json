@@ -20,9 +20,9 @@
   },
   "homepage": "https://github.com/SpaceStrix/mesto#readme",
   "devDependencies": {
-    "@babel/core": "^7.19.0",
-    "@babel/preset-env": "^7.19.1",
-    "autoprefixer": "^10.4.11",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.3",
+    "autoprefixer": "^10.4.12",
     "babel-loader": "^8.2.5",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.1",

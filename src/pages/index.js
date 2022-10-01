@@ -27,6 +27,7 @@ import {
   btnEditProfile,
   btnAddElement,
   btnEditAvatar,
+  btnDeleteCard,
   formEditAvatar,
   deleteCard,
   popupFormAvatar,
@@ -45,7 +46,7 @@ api.getAllCard().then(dataListCard => {
   sectionCardList.renderItems(dataListCard);
 });
 
-//  Экземпляр UserInfo
+//b  Экземпляр UserInfo
 const userInfo = new UserInfo({
   profileName,
   profileJob,
@@ -105,10 +106,23 @@ const popupWithImage = new PopupWithImage(
 );
 popupWithImage.setEventListeners();
 
+const deleCard = new DeleteCard(deleteCard);
+deleCard.setEventListeners();
+
 function handleLikeCard(data) {
   api
     .toggleLike(data.getIdCard(), data.liked())
     .then(dataCard => data.setLike(dataCard));
+}
+
+function handleClickDeleteCard(dataToDelete) {
+  deleCard.open();
+  deleCard.handleDeleteCard(() => {
+    api.removeCard(dataToDelete.getIdCard()).then(() => {
+      dataToDelete.removeCard();
+      deleCard.close();
+    });
+  });
 }
 
 //b Экземпляр класса Card
@@ -118,8 +132,8 @@ function createCard(item) {
     configCard,
     handleOpenPopupImg,
     handleClickDeleteCard,
-    userID,
-    handleLikeCard
+    handleLikeCard,
+    userID
   );
 
   return cardElem.createCard();
@@ -127,12 +141,6 @@ function createCard(item) {
 //b КоллБэки класса Кард
 function handleOpenPopupImg(name, link) {
   popupWithImage.open(name, link);
-}
-
-function handleClickDeleteCard(dataToDelete) {
-  api.removeCard(dataToDelete.getIdCard()).then(() => {
-    return dataToDelete.removeCard();
-  });
 }
 
 //b Экземпляр класса Section

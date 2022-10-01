@@ -48,3 +48,4 @@ export const deleteCard = ".popup_type_confirm";
 export const btnEditProfile = document.querySelector(".profile__edit");
 export const btnAddElement = document.querySelector(".profile__add-item");
 export const btnEditAvatar = document.querySelector(".profile__avatar");
+export const btnDeleteCard = document.querySelector(".element__delete");
