@@ -118,10 +118,12 @@
 
     <div class="popup popup_type_confirm">
         <div class="popup__container">
-            <h4 class="popup__title">Вы уверены ?</h4>
             <button class="popup__close" aria-label="Кнопка закрытия попапа" type="button"></button>
             <form class="popup__form" name="popup__form-confirm" novalidate>
-                <button type="submit" class="popup__delete-card">Да</button>
+                <fieldset class="popup__input-container">
+                    <legend class="popup__title">Вы уверены ?</legend>
+                </fieldset>
+                <button type="submit" class="popup__btn-safe ">Да</button>
             </form>
         </div>
     </div>
