@@ -1,3 +1,5 @@
+import defaultImg from "../images/defaultIMG.png";
+
 export class Card {
   constructor(
     data,
@@ -32,8 +34,8 @@ export class Card {
 
     this.img = this.card.querySelector(this._config.cardImage);
 
-    this.img.src = this._link;
-    this.img.alt = this._name;
+    this.img.src = this._data.link;
+    this.img.alt = this._data.name;
     this.card.querySelector(this._config.cardTitle).textContent = this._name;
 
     this._likeButton = this.card.querySelector(this._config.btnLikeCard);
@@ -48,12 +50,10 @@ export class Card {
   _checkingMatch() {
     if (this._data.owner._id != this._userID) this._deleteCard.remove();
   }
-
   removeCard() {
     this.card.remove();
     this.card = null;
   }
-
   _handleCardClick() {
     this._handleOpenPopupImg(this._name, this._link);
   }
@@ -67,6 +67,10 @@ export class Card {
     });
     this.img.addEventListener("click", () => {
       this._handleCardClick();
+    });
+    this.img.addEventListener("error", () => {
+      // this._data.link = defaultImg;
+      this.img.src = defaultImg;
     });
   }
 

@@ -35,26 +35,40 @@ let userID = null;
 const api = new Api(configApi);
 
 api
-  .getUserInfoFromServer()
-  .then(dataUser => {
-    userID = dataUser._id;
-    userInfo.setUserInfo(dataUser);
-    userInfo.setAvatar(dataUser.avatar);
+  .getInitialData()
+  .then(([dataCard, dataUserInfo]) => {
+    userID = dataUserInfo._id;
+    userInfo.setUserInfo(dataUserInfo);
+    userInfo.setAvatar(dataUserInfo.avatar);
+
+    sectionCardList.renderItems(dataCard);
   })
   .catch(err => {
     console.error(err);
   });
 
-api
-  .getAllCard()
-  .then(dataListCard => {
-    sectionCardList.renderItems(dataListCard);
-  })
-  .catch(err => {
-    console.error(err);
-  });
+// api
+//   .getUserInfoFromServer()
+//   .then(dataUser => {
+//     userID = dataUser._id;
+//     userInfo.setUserInfo(dataUser);
+//     userInfo.setAvatar(dataUser.avatar);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
+
+// api
+//   .getAllCard()
+//   .then(dataListCard => {
+//     sectionCardList.renderItems(dataListCard);
+//   })
+//   .catch(err => {
+//     console.error(err);
+//   });
 
 //b  Экземпляр UserInfo
+
 const userInfo = new UserInfo({
   profileName,
   profileJob,

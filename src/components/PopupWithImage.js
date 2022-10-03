@@ -1,3 +1,5 @@
+import defaultImg from "../images/defaultIMG.png";
+
 import { Popup } from "./Popup.js";
 
 export class PopupWithImage extends Popup {

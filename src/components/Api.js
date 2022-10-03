@@ -83,4 +83,8 @@ export class Api {
       return this.#onResponse(response);
     });
   }
+
+  getInitialData() {
+    return Promise.all([this.getAllCard(), this.getUserInfoFromServer()]);
+  }
 }
