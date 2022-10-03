@@ -39,11 +39,14 @@ export class Card {
     this._likeButton = this.card.querySelector(this._config.btnLikeCard);
     this._deleteCard = this.card.querySelector(this._config.btnDeleteCard);
 
-    if (this._data.owner._id != this._userID) this._deleteCard.remove();
-
+    this._checkingMatch();
     this._updataLike();
     this._setEventListeners();
     return this.card;
+  }
+
+  _checkingMatch() {
+    if (this._data.owner._id != this._userID) this._deleteCard.remove();
   }
 
   removeCard() {
@@ -86,8 +89,8 @@ export class Card {
       : this._likeButton.classList.remove(this._config.btnCardLikeActive);
   }
 
-  setLike(data) {
-    this._data.likes = data.likes;
+  setLike(dataCard) {
+    this._data.likes = dataCard.likes;
     this._updataLike();
   }
 }

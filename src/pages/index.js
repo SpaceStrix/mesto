@@ -6,7 +6,7 @@ import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
-import { DeleteCard } from "../components/PopupWithDeleteCard";
+import { DeleteCard } from "../components/PopupWithConfirmation";
 import { Api } from "../components/Api";
 
 import {
@@ -20,16 +20,13 @@ import {
   profileName,
   profileJob,
   profileAvatar,
-  popupFigureImg,
-  popupFigureCaption,
   formProfile,
   formCreateElement,
   btnEditProfile,
   btnAddElement,
   btnEditAvatar,
-  btnDeleteCard,
   formEditAvatar,
-  deleteCard,
+  formDeleteCard,
   popupFormAvatar,
 } from "../utils/constants.js";
 
@@ -37,14 +34,25 @@ import {
 let userID = null;
 const api = new Api(configApi);
 
-api.getUserInfoFromServer().then(dataUser => {
-  userID = dataUser._id;
-  userInfo.setUserInfo(dataUser);
-  userInfo.setAvatar(dataUser.avatar);
-});
-api.getAllCard().then(dataListCard => {
-  sectionCardList.renderItems(dataListCard);
-});
+api
+  .getUserInfoFromServer()
+  .then(dataUser => {
+    userID = dataUser._id;
+    userInfo.setUserInfo(dataUser);
+    userInfo.setAvatar(dataUser.avatar);
+  })
+  .catch(err => {
+    console.error(err);
+  });
+
+api
+  .getAllCard()
+  .then(dataListCard => {
+    sectionCardList.renderItems(dataListCard);
+  })
+  .catch(err => {
+    console.error(err);
+  });
 
 //b  Экземпляр UserInfo
 const userInfo = new UserInfo({
@@ -60,6 +68,9 @@ const popupWithFormCard = new PopupWithForm(popupAddElement, dataCard => {
     .addNewCardToServer(dataCard)
     .then(dataFromServer => {
       sectionCardList.addItem(createCard(dataFromServer));
+    })
+    .catch(err => {
+      console.error(err);
     })
     .finally(() => {
       popupWithFormCard.loadProcess(false);
@@ -91,6 +102,9 @@ const popupWithFormProfile = new PopupWithForm(popupEditProfile, dataUser => {
     .then(dataFromServer => {
       userInfo.setUserInfo(dataFromServer);
     })
+    .catch(err => {
+      console.error(err);
+    })
     .finally(() => {
       popupWithFormProfile.loadProcess(false);
       popupWithFormProfile.close();
@@ -99,39 +113,14 @@ const popupWithFormProfile = new PopupWithForm(popupEditProfile, dataUser => {
 popupWithFormProfile.setEventListeners();
 
 //b Экземпляр класса PopupWithImage
-const popupWithImage = new PopupWithImage(
-  popupFigure,
-  popupFigureCaption,
-  popupFigureImg
-);
+const popupWithImage = new PopupWithImage(popupFigure);
 popupWithImage.setEventListeners();
 
-const deleCard = new DeleteCard(deleteCard);
-deleCard.setEventListeners();
+//b Экземпляр класса DeleteCard
+const deleteCard = new DeleteCard(formDeleteCard);
+deleteCard.setEventListeners();
 
-function handleLikeCard(data) {
-  api
-    .toggleLike(data.getIdCard(), data.liked())
-    .then(dataCard => data.setLike(dataCard));
-}
-
-function handleClickDeleteCard(dataToDelete) {
-  deleCard.open();
-  deleCard.handleDeleteCard(() => {
-    api
-      .removeCard(dataToDelete.getIdCard())
-      .then(() => {
-        deleCard.loadProcess(true);
-        dataToDelete.removeCard();
-      })
-      .finally(() => {
-        deleCard.loadProcess(false);
-        deleCard.close();
-      });
-  });
-}
-
-//b Экземпляр класса Card
+//b Экземпляр класса CARD
 function createCard(item) {
   const cardElem = new Card(
     item,
@@ -144,9 +133,33 @@ function createCard(item) {
 
   return cardElem.createCard();
 }
-//b КоллБэки класса Кард
+//b КоллБэки класса CARD
 function handleOpenPopupImg(name, link) {
   popupWithImage.open(name, link);
+}
+function handleClickDeleteCard(dataToDelete) {
+  deleteCard.open();
+  deleteCard.handleDeleteCard(() => {
+    api
+      .removeCard(dataToDelete.getIdCard())
+      .then(() => {
+        dataToDelete.removeCard();
+      })
+      .catch(err => {
+        console.error(err);
+      })
+      .finally(() => {
+        deleteCard.close();
+      });
+  });
+}
+function handleLikeCard(data) {
+  api
+    .toggleLike(data.getIdCard(), data.liked())
+    .then(dataCard => data.setLike(dataCard))
+    .catch(err => {
+      console.error(err);
+    });
 }
 
 //b Экземпляр класса Section

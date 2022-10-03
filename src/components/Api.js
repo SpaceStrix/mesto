@@ -1,4 +1,11 @@
 export class Api {
+  #onResponse(response) {
+    if (response.ok) {
+      return response.json();
+    }
+    return Promise.reject({ message: "Возникла ошибка", response });
+  }
+
   constructor(config) {
     this._url = config.url;
     this._headers = config.headers;
@@ -9,9 +16,7 @@ export class Api {
     return fetch(`${this._url}/cards`, {
       headers: this._headers,
     }).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
+      return this.#onResponse(response);
     });
   }
   //b добавление новой карточки
@@ -24,9 +29,7 @@ export class Api {
         link: link,
       }),
     }).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
+      return this.#onResponse(response);
     });
   }
   //b удаление карточки
@@ -35,9 +38,7 @@ export class Api {
       method: "DELETE",
       headers: this._headers,
     }).then(response => {
-      if (response.ok) {
-        response.json();
-      }
+      return this.#onResponse(response);
     });
   }
   //b информация о пользователе
@@ -45,9 +46,7 @@ export class Api {
     return fetch(`${this._url}/users/me`, {
       headers: this._headers,
     }).then(response => {
-      if (response.ok) {
-        return response.json();
-      }
+      return this.#onResponse(response);
     });
   }
   //b редактирование профиля
@@ -60,10 +59,10 @@ export class Api {
         about,
       }),
     }).then(response => {
-      return response.json();
+      return this.#onResponse(response);
     });
   }
-
+  //b изменение аватарки
   setNewAvatar(data) {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
@@ -72,16 +71,16 @@ export class Api {
         avatar: data.avatar,
       }),
     }).then(response => {
-      return response.json();
+      return this.#onResponse(response);
     });
   }
-
+  //b удаляем либо ставим лайк
   toggleLike(idCard, liked) {
     return fetch(`${this._url}/cards/${idCard}/likes `, {
       method: liked ? "DELETE" : "PUT",
       headers: this._headers,
     }).then(response => {
-      return response.json();
+      return this.#onResponse(response);
     });
   }
 }

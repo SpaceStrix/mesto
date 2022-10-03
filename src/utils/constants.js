@@ -29,8 +29,8 @@ export const configCard = {
 //* Selectors
 export const popupAddElement = ".popup_type_new-card";
 export const popupEditProfile = ".popup_type_edit";
-export const popupFigure = ".popup_type_image";
 export const popupFormAvatar = ".popup_type_avatar";
+export const popupFigure = ".popup_type_image";
 
 export const containerElements = ".elements";
 
@@ -38,14 +38,11 @@ export const profileName = ".profile__name";
 export const profileJob = ".profile__job";
 export const profileAvatar = ".profile__avatar-img";
 
-export const popupFigureImg = ".img-container__img";
-export const popupFigureCaption = ".img-container__title";
 export const formProfile = "popup__form-profile";
 export const formCreateElement = "popup__form-element";
 export const formEditAvatar = "popup__form-avatar";
-export const deleteCard = ".popup_type_confirm";
+export const formDeleteCard = ".popup_type_confirm";
 
 export const btnEditProfile = document.querySelector(".profile__edit");
 export const btnAddElement = document.querySelector(".profile__add-item");
 export const btnEditAvatar = document.querySelector(".profile__avatar");
-export const btnDeleteCard = document.querySelector(".element__delete");
