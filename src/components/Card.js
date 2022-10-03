@@ -1,5 +1,3 @@
-import defaultImg from "../images/defaultIMG.png";
-
 export class Card {
   constructor(
     data,
@@ -41,13 +39,13 @@ export class Card {
     this._likeButton = this.card.querySelector(this._config.btnLikeCard);
     this._deleteCard = this.card.querySelector(this._config.btnDeleteCard);
 
-    this._checkingMatch();
+    this._checkMatch();
     this._updataLike();
     this._setEventListeners();
     return this.card;
   }
 
-  _checkingMatch() {
+  _checkMatch() {
     if (this._data.owner._id != this._userID) this._deleteCard.remove();
   }
   removeCard() {
@@ -68,17 +66,13 @@ export class Card {
     this.img.addEventListener("click", () => {
       this._handleCardClick();
     });
-    this.img.addEventListener("error", () => {
-      // this._data.link = defaultImg;
-      this.img.src = defaultImg;
-    });
   }
 
   getIdCard() {
     return this._data._id;
   }
 
-  liked() {
+  isLiked() {
     return this._data.likes.some(likedList => {
       return likedList._id == this._userID;
     });
@@ -88,7 +82,7 @@ export class Card {
     this._counter = this.card.querySelector(this._config.likeCounter);
     this._counter.textContent = this._data.likes.length;
 
-    this.liked()
+    this.isLiked()
       ? this._likeButton.classList.add(this._config.btnCardLikeActive)
       : this._likeButton.classList.remove(this._config.btnCardLikeActive);
   }

@@ -50,7 +50,7 @@ export class Api {
     });
   }
   //b редактирование профиля
-  editingProfile({ name, about }) {
+  editProfile({ name, about }) {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,

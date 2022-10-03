@@ -1,6 +1,6 @@
 import "./index.css";
 
-import { Card } from "../components/Cards.js";
+import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
 import { Section } from "../components/Section.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
@@ -47,28 +47,7 @@ api
     console.error(err);
   });
 
-// api
-//   .getUserInfoFromServer()
-//   .then(dataUser => {
-//     userID = dataUser._id;
-//     userInfo.setUserInfo(dataUser);
-//     userInfo.setAvatar(dataUser.avatar);
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-
-// api
-//   .getAllCard()
-//   .then(dataListCard => {
-//     sectionCardList.renderItems(dataListCard);
-//   })
-//   .catch(err => {
-//     console.error(err);
-//   });
-
 //b  Экземпляр UserInfo
-
 const userInfo = new UserInfo({
   profileName,
   profileJob,
@@ -82,13 +61,13 @@ const popupWithFormCard = new PopupWithForm(popupAddElement, dataCard => {
     .addNewCardToServer(dataCard)
     .then(dataFromServer => {
       sectionCardList.addItem(createCard(dataFromServer));
+      popupWithFormCard.close();
     })
     .catch(err => {
       console.error(err);
     })
     .finally(() => {
       popupWithFormCard.loadProcess(false);
-      popupWithFormCard.close();
     });
 });
 popupWithFormCard.setEventListeners();
@@ -112,16 +91,16 @@ popupWithAvatar.setEventListeners();
 const popupWithFormProfile = new PopupWithForm(popupEditProfile, dataUser => {
   popupWithFormProfile.loadProcess(true);
   api
-    .editingProfile(dataUser)
+    .editProfile(dataUser)
     .then(dataFromServer => {
       userInfo.setUserInfo(dataFromServer);
+      popupWithFormProfile.close();
     })
     .catch(err => {
       console.error(err);
     })
     .finally(() => {
       popupWithFormProfile.loadProcess(false);
-      popupWithFormProfile.close();
     });
 });
 popupWithFormProfile.setEventListeners();
@@ -158,18 +137,16 @@ function handleClickDeleteCard(dataToDelete) {
       .removeCard(dataToDelete.getIdCard())
       .then(() => {
         dataToDelete.removeCard();
+        deleteCard.close();
       })
       .catch(err => {
         console.error(err);
-      })
-      .finally(() => {
-        deleteCard.close();
       });
   });
 }
 function handleLikeCard(data) {
   api
-    .toggleLike(data.getIdCard(), data.liked())
+    .toggleLike(data.getIdCard(), data.isLiked())
     .then(dataCard => data.setLike(dataCard))
     .catch(err => {
       console.error(err);
