@@ -5,7 +5,8 @@ export class Card {
     handleOpenPopupImg,
     handleClickDelete,
     handleLikeCard,
-    userID
+    userID,
+    defaultImg
   ) {
     this._data = data;
     this._name = data.name;
@@ -17,6 +18,7 @@ export class Card {
     this._handleLikeCard = handleLikeCard;
 
     this._userID = userID;
+    this._defaultImg = defaultImg;
   }
 
   _getTemplate() {
@@ -65,6 +67,10 @@ export class Card {
     });
     this.img.addEventListener("click", () => {
       this._handleCardClick();
+    });
+    this.img.addEventListener("error", () => {
+      this._data.link = this._defaultImg;
+      this.img.src = this._defaultImg;
     });
   }
 

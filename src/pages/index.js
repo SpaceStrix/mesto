@@ -8,6 +8,7 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { DeleteCard } from "../components/PopupWithConfirmation";
 import { Api } from "../components/Api";
+import defaultImg from "../images/defaultIMG.png";
 
 import {
   configApi,
@@ -121,7 +122,8 @@ function createCard(item) {
     handleOpenPopupImg,
     handleClickDeleteCard,
     handleLikeCard,
-    userID
+    userID,
+    defaultImg
   );
 
   return cardElem.createCard();
