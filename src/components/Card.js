@@ -40,7 +40,6 @@ export class Card {
 
     this._likeButton = this.card.querySelector(this._config.btnLikeCard);
     this._deleteCard = this.card.querySelector(this._config.btnDeleteCard);
-
     this._checkMatch();
     this._updataLike();
     this._setEventListeners();
@@ -69,7 +68,7 @@ export class Card {
       this._handleCardClick();
     });
     this.img.addEventListener("error", () => {
-      this._data.link = this._defaultImg;
+      this._link = this._defaultImg;
       this.img.src = this._defaultImg;
     });
   }

@@ -1,4 +1,5 @@
 import "./index.css";
+import defaultImg from "../images/defaultIMG.png";
 
 import { Card } from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
@@ -8,7 +9,6 @@ import { PopupWithForm } from "../components/PopupWithForm.js";
 import { UserInfo } from "../components/UserInfo.js";
 import { DeleteCard } from "../components/PopupWithConfirmation";
 import { Api } from "../components/Api";
-import defaultImg from "../images/defaultIMG.png";
 
 import {
   configApi,
